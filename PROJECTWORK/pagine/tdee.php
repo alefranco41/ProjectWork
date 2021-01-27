@@ -1,6 +1,9 @@
 <?php
-  print_r($_POST["prova"]);
+
   if (array_key_exists("invia", $_POST)) {
+    $post = "";
+    $errori = "";
+    print_r($_POST["prova"]);
     if (!array_key_exists('Sesso', $_POST) && ($_POST["formule"] != "km")) {
       $errori .= "Errore sesso <br>";
     }
@@ -42,7 +45,21 @@
     if($_POST["lavoro"] == "default"){
       $errori .= "Errore lavoro <br>";
     }
-	}
+
+    if($errori != ""){
+      $post = "tdee.php";
+    }else{
+      $post = "Risultato.php";
+    }
+
+	}else{
+    $errori = "";
+    $post = "tdee.php";
+  }
+
+
+
+
 
 
 $html = "<!DOCTYPE html>
@@ -57,9 +74,9 @@ $html = "<!DOCTYPE html>
 
   <body>
       <div id='errori'>
-        $errori
+
       </div>
-      <form method='POST' action='tdee.php'>
+      <form method='POST' action=$post>
         Formula:
         <select id='formula' name='formule' onchange='controlloFormula(this.value);'>
           <option value='default' selected hidden>Seleziona</option>
@@ -88,7 +105,7 @@ $html = "<!DOCTYPE html>
             <option value='3'>Moderatamente attivo</option>
             <option value='4'>Estremamente attivo</option>
           </select><br>
-          <input type='hidden' id='prova' name='prova'>
+          <input type='hidden' id='TDEE' name='TDEE'>
           <input type='submit' name='invia' onclick='bmr()' disabled='disabled'>
       </form>
     </div>
