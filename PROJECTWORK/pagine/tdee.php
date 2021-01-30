@@ -74,7 +74,7 @@ $html = "<!DOCTYPE html>
 
   <body>
       <div id='errori'>
-
+        $errori
       </div>
       <form method='POST' action=$post>
         Formula:
