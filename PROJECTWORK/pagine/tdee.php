@@ -1,9 +1,7 @@
 <?php
-
+  session_start();
   if (array_key_exists("invia", $_POST)) {
-    $post = "";
     $errori = "";
-    print_r($_POST["prova"]);
     if (!array_key_exists('Sesso', $_POST) && ($_POST["formule"] != "km")) {
       $errori .= "Errore sesso <br>";
     }
@@ -46,15 +44,12 @@
       $errori .= "Errore lavoro <br>";
     }
 
-    if($errori != ""){
-      $post = "tdee.php";
-    }else{
-      $post = "Risultato.php";
+    if($errori == ""){
+      $_SESSION["TDEE"] = $_POST["TDEE"];
+      header('Location: risultato.php');
     }
-
 	}else{
     $errori = "";
-    $post = "tdee.php";
   }
 
 
@@ -76,7 +71,7 @@ $html = "<!DOCTYPE html>
       <div id='errori'>
         $errori
       </div>
-      <form method='POST' action=$post>
+      <form method='POST' action='tdee.php'>
         Formula:
         <select id='formula' name='formule' onchange='controlloFormula(this.value);'>
           <option value='default' selected hidden>Seleziona</option>
