@@ -3,7 +3,7 @@ session_start();
 include('../FunzioniPHP/Funzioni.php');
 
 $TDEE = (round($_SESSION["TDEE"], 0));
-
+$_SESSION["ERRORE"] = 0;
 
 if(array_key_exists("login", $_POST)){
   $username = $_POST["username"];
@@ -50,7 +50,7 @@ $html = "<!DOCTYPE html>
           </div>
         <form action='Risultato.php' method='post'>
           <input type='text' name='username' id='login' class='fadeIn second' name='login' placeholder='username'>
-          <input type='text' name='password' id='password' class='fadeIn third' name='login' placeholder='password'>
+          <input type='password' name='password' id='password' class='fadeIn third' name='login' placeholder='password'>
           <input type='submit' name ='login' class='fadeIn fourth' value='Log In'>
         </form>
         <div id='formFooter'>

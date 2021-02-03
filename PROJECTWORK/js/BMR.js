@@ -1,5 +1,7 @@
 var metabolismoBasale = 0;
-var spanArray = document.getElementsByTagName('span');
+var spanArray = document.getElementsByClassName("input");
+
+
 var inputArray = document.getElementsByTagName('input');
 var allenamento = document.getElementsByName('Allenamento');
 var cardio = document.getElementsByName('Cardio');

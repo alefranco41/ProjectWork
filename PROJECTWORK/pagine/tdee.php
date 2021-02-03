@@ -63,6 +63,7 @@ $html = "<!DOCTYPE html>
   <head>
     <meta charset='utf-8'>
     <title>ProjectWork</title>
+    <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css' integrity='sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm' crossorigin='anonymous'>
     <script src='../js/BMR.js' charset='utf-8'></script>
     <link rel='stylesheet' href='../css/indexStyle.css'>
   </head>
@@ -82,17 +83,17 @@ $html = "<!DOCTYPE html>
           <option value='s'>Schofield</option>
         </select><br>
 
-        <div class='campi'>
-          <span>Sesso:<input type='radio' id='maschio' name='Sesso' value='m' disabled='disabled'> Maschio <input type='radio' id='femmina' name='Sesso' value='f' disabled='disabled'> Femmina<br></span>
-          <span>Peso: <input type='text' name='Peso' id='Peso' disabled='disabled'><br></span>
-          <span>Altezza: <input type='text' name='Altezza' id='Altezza' disabled='disabled'><br></span>
-          <span>Età: <input type='text' name='Eta' id='Età' disabled='disabled'><br></span>
-          <span>Massa Grassa: <input type='text' name='MassaGrassa' id='MassaGrassa' disabled='disabled'><br></span>
-          <span>Allenamento:<input type='radio' id='si' name='Allenamento' value='si' disabled='disabled' onchange='controlloAllenamento()'> Si <input type='radio' id='no' name='Allenamento' value='no' disabled='disabled' onchange='controlloAllenamento()'> No<br></span>
-          <span>Cardio:<input type='radio' id='si' name='Cardio' value='si' disabled='disabled' onchange='controlloCardio()'> Si <input type='radio' id='no' name='Cardio' value='no' disabled='disabled' onchange='controlloCardio()'> No<br></span>
-          <span>N° Giorni: <input type='text' name='GiorniCardio' id='GiorniCardio' disabled='disabled'><br> </span>
-          <span>Pesi:<input type='radio' id='si' name='Pesi' value='si' disabled='disabled' onchange='controlloPesi()'> Si <input type='radio' id='no' name='Pesi' value='no' disabled='disabled' onchange='controlloPesi()'> No<br></span>
-          <span>N° Giorni: <input type='text' name='GiorniPesi' id='GiorniPesi' disabled='disabled'><br> </span>
+        <div class='campi' id='campi'>
+          <div class='input'>Sesso:<input type='radio' id='maschio' name='Sesso' value='m' disabled='disabled'> Maschio <input type='radio' id='femmina' name='Sesso' value='f' disabled='disabled'> Femmina<br></div>
+          <div class='input'>Peso: <input type='text' name='Peso' id='Peso' disabled='disabled'><br></div>
+          <div class='input'>Altezza: <input type='text' name='Altezza' id='Altezza' disabled='disabled'><br></div>
+          <div class='input'>Età: <input type='text' name='Eta' id='Età' disabled='disabled'><br></div>
+          <div class='input'>Massa Grassa: <input type='text' name='MassaGrassa' id='MassaGrassa' disabled='disabled'><br></div>
+          <div class='input'>Allenamento:<input type='radio' id='si' name='Allenamento' value='si' disabled='disabled' onchange='controlloAllenamento()'> Si <input type='radio' id='no' name='Allenamento' value='no' disabled='disabled' onchange='controlloAllenamento()'> No<br></div>
+          <div class='input'>Cardio:<input type='radio' id='si' name='Cardio' value='si' disabled='disabled' onchange='controlloCardio()'> Si <input type='radio' id='no' name='Cardio' value='no' disabled='disabled' onchange='controlloCardio()'> No<br></div>
+          <div class='input'>N° Giorni: <input type='text' name='GiorniCardio' id='GiorniCardio' disabled='disabled'><br> </div>
+          <div class='input'>Pesi:<input type='radio' id='si' name='Pesi' value='si' disabled='disabled' onchange='controlloPesi()'> Si <input type='radio' id='no' name='Pesi' value='no' disabled='disabled' onchange='controlloPesi()'> No<br></div>
+          <div class='input'>N° Giorni: <input type='text' name='GiorniPesi' id='GiorniPesi' disabled='disabled'><br> </div>
           Stile di vita: <select id='lavoro' name='lavoro' disabled='disabled'>
             <option value='default' selected hidden>Seleziona</option>
             <option value='1'>Sedentario</option>
