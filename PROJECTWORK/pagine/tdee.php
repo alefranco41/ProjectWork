@@ -7,6 +7,7 @@
     }
     if(!is_numeric($_POST["Peso"]) || (($_POST["Peso"]<1) || ($_POST["Peso"]>635))){
       $errori .= "Errore peso <br>";
+      //ciao bro
     }
     if((($_POST["formule"] != "km") && ($_POST["formule"] != "s")) && (!is_numeric($_POST["Altezza"]) || $_POST["Altezza"] < 50 || $_POST["Altezza"] > 251)){
       $errori .= "Errore altezza <br>";
