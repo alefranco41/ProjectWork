@@ -15,7 +15,7 @@ if(array_key_exists("login", $_POST)){
     header('Location: paginaUtente.php');
   }else{
     $_SESSION["ERRORE"] = 1;
-    $link = "<a class='underlineHover' href='#'>Registrati</a>";
+    $link = "<a class='underlineHover' href='registrati.php'>Registrati</a>";
     $errori = "utente non riconsciuto, $link";
   }
 }else{
@@ -43,16 +43,14 @@ $html = "<!DOCTYPE html>
             $errori
           </div>
         <form action='Risultato.php' method='post'>
-          <input type='text' name='username' id='login' class='fadeIn second' name='login' placeholder='username'>
-          <input type='password' name='password' id='password' class='fadeIn third' name='login' placeholder='password'>
+          <input type='text' name='username' id='login' class='fadeIn second' placeholder='username'>
+          <input type='password' name='password' id='password' class='fadeIn third' placeholder='password'>
           <input type='submit' name ='login' class='fadeIn fourth' value='Log In'>
         </form>
-        <form action='Risultato.php' method='post' id='login'>
-          <div id='formFooter'>
-            <a class='underlineHover' href='recuperoPass.php'>Recupero Password</a><br>
-            <a class='underlineHover' href='#'>Registrati</a>
-          </div>
-        </form>
+        <div id='formFooter'>
+          <a class='underlineHover' href='recuperoPass.php'>Recupero Password</a><br>
+          <a class='underlineHover' href='registrati.php'>Registrati</a>
+        </div>
       </div>
     </div>
   </body>
