@@ -21,8 +21,6 @@ if(array_key_exists("login", $_POST)){
 }else{
   $errori = "";
 }
-
-
 $html = "<!DOCTYPE html>
   <html lang='en' dir='ltr'>
 
@@ -39,10 +37,6 @@ $html = "<!DOCTYPE html>
   <body>
     <p>Benvenuto Utente, in base ai dati inseriti, il tuo fabbisogno calorico giornaliero risulta essere di $TDEE kcal </p>
     <p>Per poter usufruire dei nostri servizi, è necessario eseguire il Login</p>
-
-
-
-
       <div class='wrapper fadeInDown'>
         <div id='formContent'>
           <div class='fadeIn first'>
@@ -53,16 +47,16 @@ $html = "<!DOCTYPE html>
           <input type='password' name='password' id='password' class='fadeIn third' name='login' placeholder='password'>
           <input type='submit' name ='login' class='fadeIn fourth' value='Log In'>
         </form>
-        <div id='formFooter'>
-          <a class='underlineHover' href='#'>Recupero Password</a><br>
-          <a class='underlineHover' href='#'>Registrati</a>
-        </div>
+        <form action='Risultato.php' method='post' id='login'>
+          <div id='formFooter'>
+            <a class='underlineHover' href='recuperoPass.php'>Recupero Password</a><br>
+            <a class='underlineHover' href='#'>Registrati</a>
+          </div>
+        </form>
       </div>
     </div>
   </body>
   </html>";
 
 print($html);
-
-
- ?>
+?>
