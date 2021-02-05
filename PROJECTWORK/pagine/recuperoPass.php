@@ -1,26 +1,29 @@
 <?php
+include('../FunzioniPHP/Funzioni.php');
 if(isset($_POST['email'])){
   $errore=0;
   if($_POST['email']==""){
     $errore=1;
   }else{
-    $result=mysql_query("select username, password from utente where email='".$_POST['email']."' limit 0,1", $db);
-    if(mysql_num_rows($result)>0){
-      $row=mysql_fetch_array($result);
-      //l’hash ci servirà per recuperare i dati utente e confermare la richiesta
-      //la password nel database si presume criptata
-      $hash=$row['password']."".$row['id'];
+    $email = $_POST['email'];
+    $sql = "SELECT username, password FROM utente WHERE email='$email'";
+    $righe = eseguiquery($sql);
+
+
+    if(count($righe)>0){
+      $hash=$righe[0]['password'];
     }else
       $errore=1;
-
   }
 
   //se non ci sono stati errori, invio l’email all’utente con il link da confermare
   if($errore==0){
 
+
     $header= "From: sito.it <info@sito.it>\n";
     $header .= "Content-Type: text/html; charset=\"iso-8859-1\"\n";
     $header .= "Content-Transfer-Encoding: 7bit\n\n";
+
 
     $subject= "sito.it - Nuova password utente";
 
@@ -34,17 +37,11 @@ if(isset($_POST['email'])){
 
     $mess_invio.='</body><html>';
 
-    //invio email
-    if(@mail($_POST['email'], $subject, $mess_invio, $header)){
-      echo "<div class=\"campo_contatti\" style=\"margin-left: 20px; height: 300px\">";
-        echo "Email inviata con successo. Controlla la tua email<br /><br />";
-      echo "</div>
-      <div class=\"clear\"></div>";
-      unset($_POST); //elimino le variabili post, in modo che non appaiano nel form
-    }
+    inviaMail($email, $subject, $mess_invio);
   }
 }
 ?>
+
 <head>
   <meta charset='utf-8'>
   <link rel='stylesheet' href='../css/risultatoStyle.php'>
@@ -54,7 +51,6 @@ if(isset($_POST['email'])){
   <script src='//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
 </head>
 <form action="" method="post" id="login">
-
   <div class='wrapper fadeInDown'>
     <div id='formContent'>
       <div class='fadeIn second'>Inserisci la tua email per ricevere la nuova password</div>

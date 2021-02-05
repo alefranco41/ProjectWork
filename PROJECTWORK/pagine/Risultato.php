@@ -2,6 +2,9 @@
 session_start();
 include('../FunzioniPHP/Funzioni.php');
 
+
+
+
 $TDEE = (round($_SESSION["TDEE"], 0));
 $_SESSION["ERRORE"] = 0;
 
