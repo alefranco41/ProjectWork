@@ -11,7 +11,7 @@ if(isset($_POST['email'])){
 
 
     if(count($righe)>0){
-      $hash=$righe[0]['password'];
+      $hash= generaHash();
     }else
       $errore=1;
   }
@@ -30,9 +30,9 @@ if(isset($_POST['email'])){
     $mess_invio="<html><body>";
 
     $mess_invio.="
-    Clicca sul <a href=\"http://www.sito.it/nuova_password.php?hash=".$hash."\">link</a> per confermare la nuova password.<br />
+    Clicca sul <a href=\"http://localhost/projectwork/PROJECTWORK/pagine/nuova_password.php?hash=".$hash."\">link</a> per confermare la nuova password.<br />
     Se il link non è visibile, copia la riga qui sotto e incollala sul tuo browser: <br />
-    http://www.sito.it/nuova_password.php?hash=".$hash."
+    http://localhost/projectwork/PROJECTWORK/pagine/nuova_password.php?hash=".$hash."
     ";
 
     $mess_invio.='</body><html>';
@@ -40,8 +40,8 @@ if(isset($_POST['email'])){
     inviaMail($email, $subject, $mess_invio);
   }
 }
-?>
-
+$html = "<!DOCTYPE html>
+<html lang='en' dir='ltr'>
 <head>
   <meta charset='utf-8'>
   <link rel='stylesheet' href='../css/risultatoStyle.php'>
@@ -50,12 +50,18 @@ if(isset($_POST['email'])){
   <script src='//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js'></script>
   <script src='//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
 </head>
-<form action="" method="post" id="login">
-  <div class='wrapper fadeInDown'>
-    <div id='formContent'>
-      <div class='fadeIn second'>Inserisci la tua email per ricevere la nuova password</div>
-      <input type="text" name="email" value="<?=@$_POST['email']?>" class="campo" />
-      <input type="submit" class='fadeIn second' value="invia email" />
-    </div>
-  </div>
-</form>
+  <body>
+    <form action='' method='post' id='login'>
+      <div class='wrapper fadeInDown'>
+        <div id='formContent'>
+          <div class='fadeIn second'>Inserisci la tua email per ricevere la nuova password</div>
+          <input type='text' name='email' placeholder='email' class='campo' />
+          <input type='submit' class='fadeIn second' value='invia email' />
+        </div>
+      </div>
+    </form>
+  </body>
+</html>";
+
+print($html);
+?>
