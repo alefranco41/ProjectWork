@@ -6,24 +6,19 @@ if(isset($_POST['email'])){
     $errore=1;
   }else{
     $email = $_POST['email'];
-    $sql = "SELECT username, password FROM utente WHERE email='$email'";
+    $sql = "SELECT * FROM utente WHERE email='$email'";
     $righe = eseguiquery($sql);
 
 
     if(count($righe)>0){
-      $hash= generaHash();
+      $hash = $righe[0]['password_hashed'];
+
     }else
       $errore=1;
   }
 
   //se non ci sono stati errori, invio l’email all’utente con il link da confermare
   if($errore==0){
-
-
-    $header= "From: sito.it <info@sito.it>\n";
-    $header .= "Content-Type: text/html; charset=\"iso-8859-1\"\n";
-    $header .= "Content-Transfer-Encoding: 7bit\n\n";
-
 
     $subject= "sito.it - Nuova password utente";
 

@@ -1,40 +1,20 @@
 <?php
 include('../FunzioniPHP/Funzioni.php');
 
+if(isset($_GET['hash']) && isset($_POST['invia'])){
+	$sql = "SELECT * FROM utente WHERE password_hashed='{$_GET['hash']}'";
+	$righe = eseguiquery($sql);
 
-function random($lunghezza=12){
-	$caratteri_disponibili ="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890";
-	$codice = "";
-	for($i = 0; $i<$lunghezza; $i++){
-		$codice = $codice.substr($caratteri_disponibili,rand(0,strlen($caratteri_disponibili)-1),1);
-	}
-	return $codice;
-}
+	if(count($righe)>0){
 
+		$password_old = $righe[0]['password'];
+		$email = $righe[0]['email'];
+		$password = $_POST['pw'];
+		$nuovo_hash = password_hash($password, PASSWORD_DEFAULT);
 
+		$sql = "UPDATE utente SET password = '$password', password_hashed = '$nuovo_hash' WHERE password = '$password_old'";
+		eseguiquery($sql);
 
-if(isset($_GET['hash'])){
-
-	$hash=$_GET['hash'];
-	$id=substr($hash, 32);
-	$password_old=substr($hash, 0, 32);
-
-	$password=random(8); //nuova password di 8 caratteri
-
-	//controllo che i valori dell’hash corrispondano ai valori salvati nel database
-	$result=mysql_query("SELECT * FROM utenti WHERE id=".$id." AND password='".$password_old."'", $db);
-
-	if(mysql_num_rows($result)>0){
-
-		$row=mysql_fetch_array($result);
-		$email=$row['email'];
-
-		//salvo la nuova password al posto della vecchia (in md5)
-		$result=mysql_query("update utenti set password='".md5($password)."' where id=".$id." and password='".$password_old."'", $db);
-
-		$header= "From: sito.it <info@sito.it>\n";
-		$header .= "Content-Type: text/html; charset=\"iso-8859-1\"\n";
-		$header .= "Content-Transfer-Encoding: 7bit\n\n";
 
 		$subject= "sito.it - Nuova password utente";
 
@@ -47,10 +27,7 @@ if(isset($_GET['hash'])){
 
 		$mess_invio.='</body><html>';
 
-
-		if(@mail($email, $subject, $mess_invio, $header)){
-			echo "La password è stata cambiata con successo. Controlla la tua email.<br /><br />";
-		}
+		inviaMail($email, $subject, $mess_invio);
 	}
 }
 
@@ -74,7 +51,7 @@ $html = "<!DOCTYPE html>
           <div class='fadeIn second'>Inserisci la nuova password</div>
           <input type='password' name='pw' placeholder='password' class='campo'/>
           <input type='password' name='pwc' placeholder='conferma password' class='campo'/>
-          <input type='submit' class='fadeIn second' value='cambia password'/>
+          <input type='submit' name='invia' class='fadeIn second' value='cambia password'/>
         </div>
       </div>
     </form>

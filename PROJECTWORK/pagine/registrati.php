@@ -16,8 +16,8 @@ if(array_key_exists("registrati", $_POST)){
   if (empty($_POST["cognome"])) {
     $errori .= "Il cognome è obbligatorio";
   } else {
-    $nome = test_input($_POST["cognome"]);
-    if (!preg_match("/^[a-zA-Z-' ]*$/",$nome)) {
+    $cognome = test_input($_POST["cognome"]);
+    if (!preg_match("/^[a-zA-Z-' ]*$/",$cognome)) {
       $errori .= "Errore nel campo cognome";
     }
   }
@@ -37,6 +37,40 @@ if(array_key_exists("registrati", $_POST)){
       }
     }
   }
+
+  if (empty($_POST["username"])) {
+    $errori .= "l'username è obbligatorio";
+  } else {
+    $username = test_input($_POST["username"]);
+    if (!preg_match('/^[a-z\d_]{2,20}$/i', $username)) {
+      $errori .= "Errore nel campo username";
+    }else{
+      $userID = $_POST["username"];
+      $sql = "SELECT username FROM utente WHERE username = '$userID'";
+    	$righe = eseguiquery($sql);
+      if(count($righe)){
+        $errori .= "username già in uso";
+      }
+    }
+  }
+
+  if (empty($_POST["password"])) {
+    $errori .= "la password è obbligatoria";
+  } else {
+    $password = test_input($_POST["password"]);
+    if (!preg_match('/^(?=.*\d)(?=.*[a-z]).{8,16}$/', $password)) {
+      $errori .= "La password non soddisfa i requisiti";
+    }else{
+      $hashed_password = password_hash($_POST['password'], PASSWORD_DEFAULT);
+    }
+  }
+
+  if($errori == ""){
+    echo "ciao";
+    $sql = "INSERT INTO utente (username, password, password_hashed, nome, cognome, email) VALUES ('{$_POST['username']}', '{$_POST['password']}', '$hashed_password', '{$_POST['nome']}', '{$_POST['cognome']}', '{$_POST['email']}')";
+    eseguiquery($sql);
+  }
+
 }
 
 $html = "<!DOCTYPE html>
@@ -64,8 +98,8 @@ $html = "<!DOCTYPE html>
           <input type='text' name='nome' id='nome' class='fadeIn second' placeholder='nome'>
           <input type='text' name='cognome' id='cognome' class='fadeIn second' placeholder='cognome'>
           <input type='text' name='email' id='email' class='fadeIn second' placeholder='email'>
-          <input type='text' name='username' id='login' class='fadeIn second' name='login' placeholder='username'>
-          <input type='password' name='password' id='password' class='fadeIn third' name='login' placeholder='password'>
+          <input type='text' name='username' id='login' class='fadeIn second' placeholder='username'>
+          <input type='password' name='password' id='password' class='fadeIn third' placeholder='password'>
           <input type='submit' name ='registrati' class='fadeIn fourth' value='Registrati'>
         </form>
       </div>
