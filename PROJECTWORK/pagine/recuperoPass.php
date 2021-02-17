@@ -27,7 +27,7 @@ if(isset($_POST['email'])){
     $mess_invio.="
     Clicca sul <a href=\"http://localhost/projectwork/PROJECTWORK/pagine/nuova_password.php?hash=".$hash."\">link</a> per confermare la nuova password.<br />
     Se il link non è visibile, copia la riga qui sotto e incollala sul tuo browser: <br />
-    http://localhost/projectwork/PROJECTWORK/pagine/nuova_password.php?hash=".$hash."
+    http://localhost/pw/PROJECTWORK/pagine/nuova_password.php?hash=".$hash."
     ";
 
     $mess_invio.='</body><html>';

@@ -9,8 +9,8 @@ if(isset($_GET['hash']) && isset($_POST['invia'])){
 
 		$password_old = $righe[0]['password'];
 		$email = $righe[0]['email'];
-		$password = $_POST['pw'];
-		$nuovo_hash = password_hash($password, PASSWORD_DEFAULT);
+		$password = encrypt_decrypt("encrypt", $_POST['pw']);
+		$nuovo_hash = password_hash($_POST['pw'], PASSWORD_DEFAULT);
 
 		$sql = "UPDATE utente SET password = '$password', password_hashed = '$nuovo_hash' WHERE password = '$password_old'";
 		eseguiquery($sql);

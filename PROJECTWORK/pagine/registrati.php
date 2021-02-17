@@ -61,13 +61,14 @@ if(array_key_exists("registrati", $_POST)){
     if (!preg_match('/^(?=.*\d)(?=.*[a-z]).{8,16}$/', $password)) {
       $errori .= "La password non soddisfa i requisiti";
     }else{
+      $pass = encrypt_decrypt("encrypt", $_POST['password']);
       $hashed_password = password_hash($_POST['password'], PASSWORD_DEFAULT);
     }
   }
 
   if($errori == ""){
     echo "ciao";
-    $sql = "INSERT INTO utente (username, password, password_hashed, nome, cognome, email) VALUES ('{$_POST['username']}', '{$_POST['password']}', '$hashed_password', '{$_POST['nome']}', '{$_POST['cognome']}', '{$_POST['email']}')";
+    $sql = "INSERT INTO utente (username, password, password_hashed, nome, cognome, email) VALUES ('{$_POST['username']}', '$pass', '$hashed_password', '{$_POST['nome']}', '{$_POST['cognome']}', '{$_POST['email']}')";
     eseguiquery($sql);
   }
 

@@ -10,7 +10,7 @@ $_SESSION["ERRORE"] = 0;
 
 if(array_key_exists("login", $_POST)){
   $username = $_POST["username"];
-  $password = $_POST["password"];
+  $password = encrypt_decrypt("encrypt", $_POST["password"]);
   $sql = "SELECT username, password FROM utente WHERE username = '$username' AND password = '$password'";
 	$righe = eseguiquery($sql);
 
