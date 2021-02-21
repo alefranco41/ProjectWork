@@ -21,6 +21,8 @@ require_once '../mail/class.smtp.php';
 		return $righe;
 	}
 
+
+
 	function encrypt_decrypt($action, $string)
     {
         $output = false;
@@ -39,6 +41,18 @@ require_once '../mail/class.smtp.php';
         }
         return $output;
     }
+
+		function chiamataAPI($query)
+			{
+				$curl = curl_init();
+				curl_setopt($curl, CURLOPT_URL, $query);
+				curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+				$output = curl_exec($curl);
+				curl_close($curl);
+
+
+				return $output;
+			}
 
 	function test_input($data) {
   $data = trim($data);
