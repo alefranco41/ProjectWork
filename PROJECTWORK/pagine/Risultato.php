@@ -45,7 +45,7 @@ $html = "<!DOCTYPE html>
           <div class='fadeIn first'>
             $errori
           </div>
-        <form action='Risultato.php' method='post'>
+        <form action='paginaUtente.php' method='post'>
           <input type='text' name='username' id='login' class='fadeIn second' placeholder='username'>
           <input type='password' name='password' id='password' class='fadeIn third' placeholder='password'>
           <input type='submit' name ='login' class='fadeIn fourth' value='Log In'>
