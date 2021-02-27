@@ -1,9 +1,18 @@
 <?php
 session_start();
 include('../FunzioniPHP/Funzioni.php');
-if(array_key_exists("invia", $_POST)){
 
-}else{
+$giorni = [
+    'Lunedì',
+    'Martedì',
+    'Mercoledì',
+    'Giovedì',
+    'Venerdì',
+    'Sabato',
+    'Domenica'
+];
+
+if(!array_key_exists("invia", $_POST)){
   $u = $_POST["username"];
   $p = encrypt_decrypt("encrypt", $_POST["password"]);
   $sql = "SELECT * FROM utente WHERE username = '$u' AND password = '$p'";
@@ -12,15 +21,46 @@ if(array_key_exists("invia", $_POST)){
   if(count($righe) == 0){
     header('Location: risultato.php');
   }
+}else{
+   $righe = $_POST["pasti"];
+   $colonne = 8;
+
+   $tabella = "<table>";
+   for ($i=0; $i<$righe; $i++) {
+     if($i == 0){
+       $tabella .= "<tr>";
+       $tabella .= "<td>Giorno</td>";
+       for($k=0; $k<count($giorni); $k++){
+         $tabella .= "<td>{$giorni[$k]}</td>";
+       }
+       $tabella .= "</tr>";
+     }
+     for($j=0; $j<$colonne; $j++){
+       $tabella .= "<td>ciao</td>";
+     }
+     $tabella .= "</tr>";
+
+     if($i == ($righe-1)){
+       $tabella .= "<tr>";
+       $tabella .= "<td>Totale</td>";
+       for($k=0; $k<count($giorni); $k++){
+         $tabella .= "<td>Totale {$giorni[$k]}</td>";
+       }
+       $tabella .= "</tr>";
+     }
+   }
+   $tabella .= "</table>";
+
 }
 
 
 
 
 
-
-/*$query = "https://api.edamam.com/search?q=chicken&app_id=faa0810d&app_key=4f4d26e1dacc3ddb0e32f16acc203356&from=0&to=1&calories=591-722&health=alcohol-free";
-$output = chiamataAPI($query);*/
+$sasso = "ciao";
+$query = "https://api.edamam.com/search?$sasso";
+echo $query;
+//$output = chiamataAPI($query);
 
 
 
@@ -64,6 +104,8 @@ $html = "<!DOCTYPE html>
     </select><br>
     <input type='submit' name='invia'>
   </form>
+
+  $tabella
   </body>
   </html>
 ";

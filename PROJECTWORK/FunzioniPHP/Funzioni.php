@@ -44,14 +44,28 @@ require_once '../mail/class.smtp.php';
 
 		function chiamataAPI($query)
 			{
-				$curl = curl_init();
-				curl_setopt($curl, CURLOPT_URL, $query);
-				curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
-				$output = curl_exec($curl);
-				curl_close($curl);
+				$nodes = array('http://www.google.com', 'http://www.microsoft.com', 'http://www.rustyrazorblade.com');
+				$node_count = count($nodes);
 
+				$curl_arr = array();
+				$master = curl_multi_init();
 
-				return $output;
+				for($i = 0; $i < $node_count; $i++){
+			    $url =$nodes[$i];
+			    $curl_arr[$i] = curl_init($url);
+			    curl_setopt($curl_arr[$i], CURLOPT_RETURNTRANSFER, true);
+			    curl_multi_add_handle($master, $curl_arr[$i]);
+				}
+				do {
+				    curl_multi_exec($master,$running);
+				} while($running > 0);
+
+				echo "results: ";
+				for($i = 0; $i < $node_count; $i++){
+			    $results = curl_multi_getcontent  ($curl_arr[$i]);
+			    echo( $i . "\n" . $results . "\n");
+				}
+				echo 'done';
 			}
 
 	function test_input($data) {
