@@ -1,21 +1,26 @@
 <?php
 session_start();
 include('../FunzioniPHP/Funzioni.php');
+if(array_key_exists("invia", $_POST)){
 
-$u = $_POST["username"];
-$p = encrypt_decrypt("encrypt", $_POST["password"]);
+}else{
+  $u = $_POST["username"];
+  $p = encrypt_decrypt("encrypt", $_POST["password"]);
+  $sql = "SELECT * FROM utente WHERE username = '$u' AND password = '$p'";
+  $righe = eseguiquery($sql);
 
-$sql = "SELECT * FROM utente WHERE username = '$u' AND password = '$p'";
-$righe = eseguiquery($sql);
-if(count($righe) == 0){
-  header('Location: risultato.php');
+  if(count($righe) == 0){
+    header('Location: risultato.php');
+  }
 }
 
 
 
 
-$query = "https://api.edamam.com/search?q=chicken&app_id=faa0810d&app_key=4f4d26e1dacc3ddb0e32f16acc203356&from=0&to=1&calories=591-722&health=alcohol-free";
-$output = chiamataAPI($query);
+
+
+/*$query = "https://api.edamam.com/search?q=chicken&app_id=faa0810d&app_key=4f4d26e1dacc3ddb0e32f16acc203356&from=0&to=1&calories=591-722&health=alcohol-free";
+$output = chiamataAPI($query);*/
 
 
 

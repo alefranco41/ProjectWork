@@ -14,9 +14,7 @@ if(array_key_exists("login", $_POST)){
   $sql = "SELECT username, password FROM utente WHERE username = '$username' AND password = '$password'";
 	$righe = eseguiquery($sql);
 
-  if(count($righe)){
-    header('Location: paginaUtente.php');
-  }else{
+  if(!count($righe)){
     $_SESSION["ERRORE"] = 1;
     $link = "<a class='underlineHover' href='registrati.php'>Registrati</a>";
     $errori = "utente non riconsciuto, $link";
