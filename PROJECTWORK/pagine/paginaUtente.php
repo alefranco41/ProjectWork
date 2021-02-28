@@ -22,6 +22,16 @@ if(!array_key_exists("invia", $_POST)){
     header('Location: risultato.php');
   }
 }else{
+  $nodes = array();
+  for ($i=0; $i<$_POST["pasti"]; $i++) {
+    $randomAPI = array_rand($APIkey, 1);
+    $query = "https://api.edamam.com/search?q=breakfast&from=0&to=1&app_id={$APIkey[$randomAPI][0]}&app_key={$APIkey[$randomAPI][1]}";
+    array_push($nodes, $query);
+  }
+  $output = chiamataAPI($nodes);
+  $output = json_encode($output);
+
+
    $righe = $_POST["pasti"];
    $colonne = 8;
 
@@ -36,7 +46,7 @@ if(!array_key_exists("invia", $_POST)){
        $tabella .= "</tr>";
      }
      for($j=0; $j<$colonne; $j++){
-       $tabella .= "<td>ciao</td>";
+       $tabella .= "<td class='sasso'>ciao</td>";
      }
      $tabella .= "</tr>";
 
@@ -57,10 +67,13 @@ if(!array_key_exists("invia", $_POST)){
 
 
 
-$sasso = "ciao";
-$query = "https://api.edamam.com/search?$sasso";
-echo $query;
-//$output = chiamataAPI($query);
+
+
+
+
+
+
+
 
 
 

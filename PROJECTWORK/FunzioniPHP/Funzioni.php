@@ -42,11 +42,20 @@ require_once '../mail/class.smtp.php';
         return $output;
     }
 
-		function chiamataAPI($query)
-			{
-				$nodes = array('http://www.google.com', 'http://www.microsoft.com', 'http://www.rustyrazorblade.com');
-				$node_count = count($nodes);
 
+		$APIkey = array(
+		0 => array('faa0810d','4f4d26e1dacc3ddb0e32f16acc203356'),
+		1 => array('359fdd13','dc7302c318e206fa9ee88d27256c9bc7'),
+		2 => array('7114a79b','2208d449b18982bda22638d90a748ec4'),
+		3 => array('c0b1ad26','75d270134a65e6675967e6672ec68730'),
+		4 => array('86e59a6c','ecca68486eb31c7d9ec93edb956d9872')
+		);
+
+
+		function chiamataAPI($nodes)
+			{
+				$node_count = count($nodes);
+				$apiResultArray = array();
 				$curl_arr = array();
 				$master = curl_multi_init();
 
@@ -60,12 +69,11 @@ require_once '../mail/class.smtp.php';
 				    curl_multi_exec($master,$running);
 				} while($running > 0);
 
-				echo "results: ";
 				for($i = 0; $i < $node_count; $i++){
 			    $results = curl_multi_getcontent  ($curl_arr[$i]);
-			    echo( $i . "\n" . $results . "\n");
+					array_push($apiResultArray, $results);
 				}
-				echo 'done';
+				return $apiResultArray;
 			}
 
 	function test_input($data) {
