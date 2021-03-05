@@ -48,7 +48,12 @@ require_once '../mail/class.smtp.php';
 		1 => array('359fdd13','dc7302c318e206fa9ee88d27256c9bc7'),
 		2 => array('7114a79b','2208d449b18982bda22638d90a748ec4'),
 		3 => array('c0b1ad26','75d270134a65e6675967e6672ec68730'),
-		4 => array('86e59a6c','ecca68486eb31c7d9ec93edb956d9872')
+		4 => array('86e59a6c','ecca68486eb31c7d9ec93edb956d9872'),
+		5 => array('0f044339','58deb5e2a042f65191126dbb3243049a'),
+		6 => array('9464aeae','945d042a99892ce7de61a0f2fa194ba3'),
+		7 => array('2b3e688d','ed6c9a4bc53eb6e0cf1fdbfc67a0c484'),
+		8 => array('60883be7','1fc898f8c0f108e63d0b7ea03ed99dfb'),
+		9 => array('b014acc4','5bf69d645a0fbd047485a8aa53337753')
 		);
 
 
@@ -74,6 +79,64 @@ require_once '../mail/class.smtp.php';
 					array_push($apiResultArray, $results);
 				}
 				return $apiResultArray;
+			}
+
+			function tipoPasto($j, $pasti){
+				if($pasti == 1){
+					$tipoPasto = "";
+				}else if($pasti == 2){
+					if($j == 0){
+						$tipoPasto = "&mealType=lunch";
+					}else if($j == 1){
+						$tipoPasto = "&mealType=dinner";
+					}
+				}else if($pasti == 3){
+					if($j == 0){
+						$tipoPasto = "&mealType=breakfast";
+					}else if($j == 1){
+						$tipoPasto = "&mealType=lunch";
+					}else if($j == 2){
+						$tipoPasto = "&mealType=dinner";
+					}
+				}else if($pasti == 4){
+					if($j == 0){
+						$tipoPasto = "&mealType=breakfast";
+					}else if($j == 1){
+						$tipoPasto = "&mealType=lunch";
+					}else if($j == 2){
+						$tipoPasto = "&mealType=snack";
+					}else if($j == 3){
+						$tipoPasto = "&mealType=dinner";
+					}
+				}else if($pasti == 5){
+					if($j == 0){
+						$tipoPasto = "&mealType=breakfast";
+					}else if($j == 1){
+						$tipoPasto = "&mealType=snack";
+					}else if($j == 2){
+						$tipoPasto = "&mealType=lunch";
+					}else if($j == 3){
+						$tipoPasto = "&mealType=snack";
+					}else if($j == 4){
+						$tipoPasto = "&mealType=dinner";
+					}
+				}else if($pasti == 6){
+					if($j == 0){
+						$tipoPasto = "&mealType=breakfast";
+					}else if($j == 1){
+						$tipoPasto = "&mealType=snack";
+					}else if($j == 2){
+						$tipoPasto = "&mealType=lunch";
+					}else if($j == 3){
+						$tipoPasto = "&mealType=snack";
+					}else if($j == 4){
+						$tipoPasto = "&mealType=dinner";
+					}else if($j == 5){
+						$tipoPasto = "&mealType=snack";
+					}
+				}
+
+				return $tipoPasto;
 			}
 
 	function test_input($data) {

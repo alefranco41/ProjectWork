@@ -23,13 +23,32 @@ if(!array_key_exists("invia", $_POST)){
   }
 }else{
   $nodes = array();
-  for ($i=0; $i<$_POST["pasti"]; $i++) {
-    $randomAPI = array_rand($APIkey, 1);
-    $query = "https://api.edamam.com/search?q=breakfast&from=0&to=1&app_id={$APIkey[$randomAPI][0]}&app_key={$APIkey[$randomAPI][1]}";
-    array_push($nodes, $query);
+
+
+  for ($i=0; $i<7; $i++) {
+    for ($j=0; $j<$_POST["pasti"]; $j++) {
+      $from = rand(0, 99);
+      $to = $from+1;
+      $randomAPI = array_rand($APIkey, 1);
+      $mealtype = tipoPasto($j, $_POST["pasti"]);
+      $query = "https://api.edamam.com/search?q=";
+      $query.= "&cuisineType=italian";
+      $query.= "&from=$from";
+      $query.= "&to=$to";
+      $query.= "$mealtype";
+      $query.= "&app_id={$APIkey[$randomAPI][0]}&app_key={$APIkey[$randomAPI][1]}";
+      array_push($nodes, $query);
+    }
+
+
   }
   $output = chiamataAPI($nodes);
+  $length = count($output);
   $output = json_encode($output);
+  $jsonFile = "../json/chiamataAPI.json";
+  file_put_contents($jsonFile, $output);
+
+
 
 
    $righe = $_POST["pasti"];
@@ -67,21 +86,6 @@ if(!array_key_exists("invia", $_POST)){
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 $html = "<!DOCTYPE html>
   <html lang='en' dir='ltr'>
   <head>
@@ -90,9 +94,9 @@ $html = "<!DOCTYPE html>
     <script src='../js/paginaUtente.js' charset='utf-8'></script>
   </head>
 
-  <body onload='prova()'>
+  <body onload='main()'>
   <form method='POST' action='paginaUtente.php'>
-    <input type='hidden' name='jsonarray' value='$output' id='jsonarray'>
+    <input type='hidden' name='jsonarray' value='$length' id='hidden'>
 
     Tipo di dieta:
     <select id='dieta' name='dieta'>
