@@ -67,9 +67,9 @@ if(array_key_exists("registrati", $_POST)){
   }
 
   if($errori == ""){
-    echo "ciao";
     $sql = "INSERT INTO utente (username, password, password_hashed, nome, cognome, email) VALUES ('{$_POST['username']}', '$pass', '$hashed_password', '{$_POST['nome']}', '{$_POST['cognome']}', '{$_POST['email']}')";
     eseguiquery($sql);
+    header('Location: tdee.php');
   }
 
 }

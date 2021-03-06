@@ -139,6 +139,47 @@ require_once '../mail/class.smtp.php';
 				return $tipoPasto;
 			}
 
+			function calcoloRange($tipoPasto, $numPasti, $TDEE){
+				if($numPasti == 1){
+					$range = $TDEE;
+				}else if($numPasti == 2){
+					$range = $TDEE / 2;
+				}else if($numPasti == 3){
+					if($tipoPasto == "&mealType=breakfast"){
+						$range = $TDEE / 5;
+					}else{
+						$range = $TDEE / 5 * 2;
+					}
+				}else if($numPasti == 4){
+					if($tipoPasto == "&mealType=breakfast"){
+						$range = $TDEE / 5;
+					}else if($tipoPasto == "&mealType=snack"){
+						$range = $TDEE / 10;
+					}else{
+						$range = $TDEE / 100 * 35;
+					}
+				}else if($numPasti == 5){
+					if($tipoPasto == "&mealType=breakfast"){
+						$range = $TDEE / 5;
+					}else if($tipoPasto == "&mealType=snack"){
+						$range = $TDEE / 10;
+					}else{
+						$range = $TDEE / 100 * 30;
+					}
+
+				}else if($numPasti == 6){
+					if($tipoPasto == "&mealType=breakfast"){
+						$range = $TDEE / 5;
+					}else if($tipoPasto == "&mealType=snack"){
+						$range = $TDEE / 10;
+					}else{
+						$range = $TDEE / 100 * 25;
+					}
+				}
+
+				return round($range);
+			}
+
 	function test_input($data) {
   $data = trim($data);
   $data = stripslashes($data);
