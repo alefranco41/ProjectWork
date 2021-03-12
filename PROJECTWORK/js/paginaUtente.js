@@ -11,12 +11,14 @@ function parser(jsonFile) {
   var obj = [];
   var titoli = [];
   var arrayCalorie = [];
+  var arrayFoto = [];
 
   for (var i=0; i<jsonFile.length; i++) {
     obj.push(JSON.parse(jsonFile[i]));
   }
 
   for (var i=0; i<obj.length; i++) {
+    console.log(obj[i]);
     if(obj[i]["count"] == 0){
         break;
     }else if(obj[i]["count"] >= 100){
@@ -24,47 +26,30 @@ function parser(jsonFile) {
     }else{
       var max = obj[i]["count"];
     }
-    console.log(obj[i]);
     var ricettaRandom = Math.floor(Math.random() * max);
-    console.log(ricettaRandom);
+
 
 
     var titolo = obj[i]["hits"][ricettaRandom]["recipe"]["label"];
     titoli.push(titolo);
     var calorie = obj[i]["hits"][ricettaRandom]["recipe"]["calories"] / obj[i]["hits"][ricettaRandom]["recipe"]["yield"];
     arrayCalorie.push(calorie);
+    var foto = obj[i]["hits"][ricettaRandom]["recipe"]["image"];
+    arrayFoto.push(foto);
   }
 
-  compilaTabella(titoli, arrayCalorie);
+  compilaTabella(titoli, arrayCalorie, arrayFoto);
 }
 
-function compilaTabella(t,c){
+function compilaTabella(t,c,f){
   var arrayCaselle = document.getElementsByClassName("pasto");
   if(arrayCaselle.length == t.length){
     for(var i=0; i<arrayCaselle.length; i++){
-      arrayCaselle[i].innerHTML = "Ricetta: " + t[i] + "<br>" + "Calorie: " + Math.round(c[i]) + "<br>";
+      arrayCaselle[i].innerHTML = "Ricetta: " + t[i] + "<br>" + "Calorie: " + Math.round(c[i]) + "<br>" + "<img src='" + f[i] + "'></img>";
     }
   }else{
     for(var i=0; i<arrayCaselle.length; i++){
       arrayCaselle[i].innerHTML = "la ricerca non ha prodotto risultati";
     }
   }
-
-  var tabellaPasti = document.getElementById('tabellaPasti');
-  var righe = tabellaPasti.rows;
-
-  for (var i=1; i<righe.length; i++) {
-    var caselle = righe[i].cells;
-    if(i == righe.length-1){
-      for(var j=1; j<caselle.length; j++){
-
-      }
-    }else{
-      for(var j=1; j<caselle.length; j++){
-
-      }
-    }
-
-  }
-
 }

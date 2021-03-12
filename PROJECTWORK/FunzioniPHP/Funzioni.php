@@ -53,7 +53,8 @@ require_once '../mail/class.smtp.php';
 		6 => array('9464aeae','945d042a99892ce7de61a0f2fa194ba3'),
 		7 => array('2b3e688d','ed6c9a4bc53eb6e0cf1fdbfc67a0c484'),
 		8 => array('60883be7','1fc898f8c0f108e63d0b7ea03ed99dfb'),
-		9 => array('b014acc4','5bf69d645a0fbd047485a8aa53337753')
+		9 => array('b014acc4','5bf69d645a0fbd047485a8aa53337753'),
+		10 => array('2d642a7a', 'b953642fd9d087b232400df13004ed6d')
 		);
 
 
@@ -137,6 +138,23 @@ require_once '../mail/class.smtp.php';
 				}
 
 				return $tipoPasto;
+			}
+
+
+			function tipoCucina($c){
+				if($c == "-"){
+					return "";
+				}else{
+					return "&cuisineType={$c}";
+				}
+			}
+
+			function tipoDieta($d){
+				if($d == "-"){
+					return "";
+				}else{
+					return "&health={$d}";
+				}
 			}
 
 			function calcoloRange($tipoPasto, $numPasti, $TDEE){

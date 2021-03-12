@@ -64,26 +64,26 @@ if(!array_key_exists("invia", $_POST)){
       $rangeCalorie = calcoloRange($mealtype, $_POST["pasti"], $TDEE);
       $fromCalories = round($rangeCalorie * 0.95);
       $toCalories = round($rangeCalorie * 1.05);
+      $tipocucina = tipoCucina($_POST["cucina"]);
+      $tipodieta = tipoDieta($_POST["dieta"]);
 
-      if($_POST["dieta"] == '-'){
-        $dieta = "";
-      }else{
-        $dieta = "&health=" . $_POST["dieta"];
-      }
+
 
       $query = "https://api.edamam.com/search?q=";
-      $query.= "&cuisineType=italian";
+      $query.= "$tipocucina";
       $query.= "&from=0";
       $query.= "&to=100";
       $query.= "$mealtype";
-      $query.= "$dieta";
+      $query.= "$tipodieta";
       $query.= "&calories={$fromCalories}-{$toCalories}";
       $query.= "&app_id={$APIkey[$randomAPI][0]}&app_key={$APIkey[$randomAPI][1]}";
       array_push($nodes, $query);
+
+
     }
-
-
   }
+
+
   $output = chiamataAPI($nodes);
   $length = count($output);
   $output = json_encode($output);
@@ -96,20 +96,20 @@ if(!array_key_exists("invia", $_POST)){
    $righe = $_POST["pasti"];
    $colonne = 8;
 
-   $tabella = "<table id='tabellaPasti'>";
+   $tabella = "<div class='table-wrapper'><table id='tabellaPasti' class='fl-table'>";
    for ($i=0; $i<$righe; $i++) {
      if($i == 0){
-       $tabella .= "<tr>";
-       $tabella .= "<td>Giorno</td>";
+       $tabella .= "<thead><tr>";
+       $tabella .= "<th>Giorno</th>";
        for($k=0; $k<count($giorni); $k++){
-         $tabella .= "<td>{$giorni[$k]}</td>";
+         $tabella .= "<th>{$giorni[$k]}</th>";
        }
-       $tabella .= "</tr>";
+       $tabella .= "</tr></thead>";
      }
      for($j=0; $j<$colonne; $j++){
        if($j == 0){
          $npasto = $i + 1;
-         $tabella .= "<td class='contGiorni'>pasto $npasto </td>";
+         $tabella .= "<th class='contGiorni'>pasto $npasto </th>";
        }else{
          $tabella .= "<td class='pasto'></td>";
        }
@@ -117,15 +117,15 @@ if(!array_key_exists("invia", $_POST)){
      $tabella .= "</tr>";
 
      if($i == ($righe-1)){
-       $tabella .= "<tr>";
+       $tabella .= "<tfoot><tr>";
        $tabella .= "<td>Totale</td>";
        for($k=0; $k<count($giorni); $k++){
          $tabella .= "<td>Totale {$giorni[$k]}</td>";
        }
-       $tabella .= "</tr>";
+       $tabella .= "</tr></tfoot>";
      }
    }
-   $tabella .= "</table>";
+   $tabella .= "</table></div>";
 
 }
 
@@ -139,6 +139,7 @@ $html = "<!DOCTYPE html>
     <meta charset='utf-8'>
     <title>ProjectWork</title>
     <script src='../js/paginaUtente.js' charset='utf-8'></script>
+    <link rel='stylesheet' href='../css/paginaUtente.css'>
   </head>
 
   <body onload='main()'>
@@ -154,6 +155,29 @@ $html = "<!DOCTYPE html>
       <option value='paleo'>paleo</option>
       <option value='vegetarian'>vegetariana</option>
       <option value='vegan'>vegana</option>
+    </select><br>
+
+    Tipo di cucina:
+    <select id='cucina' name='cucina'>
+      <option value='-' selected>Nessuna preferenza</option>
+      <option value='american'>Americana</option>
+      <option value='asian'>Asiatica</option>
+      <option value='british'>Inglese</option>
+      <option value='caribbean'>Caraibica</option>
+      <option value='central%20europe'>Centroeuropea</option>
+      <option value='chinese'>Cinese</option>
+      <option value='eastern%20europe'>Europea occidentale</option>
+      <option value='french'>Francese</option>
+      <option value='indian'>Indiana</option>
+      <option value='italian'>Italiana</option>
+      <option value='japanese'>Giapponese</option>
+      <option value='kosher'>Kosher</option>
+      <option value='mediterranean'>Mediterranea</option>
+      <option value='mexican'>Messicana</option>
+      <option value='middle%20eastern'>Europea orientale</option>
+      <option value='nordic'>Nordica</option>
+      <option value='south american'>Sudamericana</option>
+      <option value='south%20east%20asian'>Sud Est Asiatica</option>
     </select><br>
 
     Numero pasti giornalieri:
