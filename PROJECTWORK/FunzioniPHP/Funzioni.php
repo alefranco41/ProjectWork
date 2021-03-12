@@ -182,6 +182,9 @@ require_once '../mail/class.smtp.php';
 				return round($range);
 			}
 
+<<<<<<< HEAD
+>>>>>>> parent of b2151b1 (riempimento tabella con ricette)
+=======
 >>>>>>> parent of b2151b1 (riempimento tabella con ricette)
 	function test_input($data) {
   $data = trim($data);

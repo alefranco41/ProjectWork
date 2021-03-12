@@ -3,6 +3,11 @@ session_start();
 include('../FunzioniPHP/Funzioni.php');
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+$TDEE = $_SESSION["TDEE"];
+
+>>>>>>> parent of b2151b1 (riempimento tabella con ricette)
 =======
 $TDEE = $_SESSION["TDEE"];
 
