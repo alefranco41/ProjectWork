@@ -4,11 +4,14 @@ include('../FunzioniPHP/Funzioni.php');
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 $TDEE = $_SESSION["TDEE"];
 
 >>>>>>> parent of b2151b1 (riempimento tabella con ricette)
 =======
+=======
+>>>>>>> parent of b2151b1 (riempimento tabella con ricette)
 $TDEE = $_SESSION["TDEE"];
 
 >>>>>>> parent of b2151b1 (riempimento tabella con ricette)
