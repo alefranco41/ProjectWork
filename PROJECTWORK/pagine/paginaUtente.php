@@ -2,7 +2,7 @@
 session_start();
 include('../FunzioniPHP/Funzioni.php');
 
-
+$TDEE = $_SESSION["TDEE"];
 
 $giorni = [
     'Lunedì',
@@ -14,28 +14,21 @@ $giorni = [
     'Domenica'
 ];
 
-
-
 if(!array_key_exists("invia", $_POST)){
   $u = $_POST["username"];
   $p = encrypt_decrypt("encrypt", $_POST["password"]);
-
-  $_SESSION["username"] = $u;
-  $_SESSION["password"] = $p;
-
   $sql = "SELECT * FROM utente WHERE username = '$u' AND password = '$p'";
   $righe = eseguiquery($sql);
 
   if(count($righe) == 0){
     header('Location: risultato.php');
   }else{
-    if(!array_key_exists("TDEE", $_SESSION)){
+    if($TDEE == 0){
       $TDEE = $righe[0]["TDEE"];
       if($TDEE == 0){
         header('Location: TDEE.php');
       }
     }else{
-      $TDEE = $_SESSION["TDEE"];
       $sql = "UPDATE utente SET TDEE = '$TDEE' WHERE username = '$u' AND password = '$p'";
       $righe = eseguiquery($sql);
 
@@ -45,26 +38,17 @@ if(!array_key_exists("invia", $_POST)){
 
 
   $nodes = array();
-  $id = $_SESSION["username"];
-  $pass = $_SESSION["password"];
-
-  if(array_key_exists("TDEE", $_SESSION)){
-    $TDEE = $_SESSION["TDEE"];
-  }else{
-    $sql = "SELECT * FROM utente WHERE username = '$id' AND password = '$pass'";
-    $righe = eseguiquery($sql);
-    $TDEE = $righe[0]["TDEE"];
-  }
 
 
   for ($i=0; $i<7; $i++) {
     for ($j=0; $j<$_POST["pasti"]; $j++) {
+      $from = rand(0, 99);
+      $to = $from+1;
       $randomAPI = array_rand($APIkey, 1);
       $mealtype = tipoPasto($j, $_POST["pasti"]);
       $rangeCalorie = calcoloRange($mealtype, $_POST["pasti"], $TDEE);
       $fromCalories = round($rangeCalorie * 0.95);
       $toCalories = round($rangeCalorie * 1.05);
-
       if($_POST["dieta"] == '-'){
         $dieta = "";
       }else{
@@ -73,12 +57,13 @@ if(!array_key_exists("invia", $_POST)){
 
       $query = "https://api.edamam.com/search?q=";
       $query.= "&cuisineType=italian";
-      $query.= "&from=0";
-      $query.= "&to=100";
+      $query.= "&from=$from";
+      $query.= "&to=$to";
       $query.= "$mealtype";
       $query.= "$dieta";
       $query.= "&calories={$fromCalories}-{$toCalories}";
       $query.= "&app_id={$APIkey[$randomAPI][0]}&app_key={$APIkey[$randomAPI][1]}";
+      echo $query;
       array_push($nodes, $query);
     }
 
@@ -96,7 +81,7 @@ if(!array_key_exists("invia", $_POST)){
    $righe = $_POST["pasti"];
    $colonne = 8;
 
-   $tabella = "<table id='tabellaPasti'>";
+   $tabella = "<table>";
    for ($i=0; $i<$righe; $i++) {
      if($i == 0){
        $tabella .= "<tr>";
@@ -107,12 +92,7 @@ if(!array_key_exists("invia", $_POST)){
        $tabella .= "</tr>";
      }
      for($j=0; $j<$colonne; $j++){
-       if($j == 0){
-         $npasto = $i + 1;
-         $tabella .= "<td class='contGiorni'>pasto $npasto </td>";
-       }else{
-         $tabella .= "<td class='pasto'></td>";
-       }
+       $tabella .= "<td class='sasso'>ciao</td>";
      }
      $tabella .= "</tr>";
 
