@@ -184,6 +184,9 @@ require_once '../mail/class.smtp.php';
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
+>>>>>>> parent of b2151b1 (riempimento tabella con ricette)
+=======
 >>>>>>> parent of b2151b1 (riempimento tabella con ricette)
 =======
 >>>>>>> parent of b2151b1 (riempimento tabella con ricette)
