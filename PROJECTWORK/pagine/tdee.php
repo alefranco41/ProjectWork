@@ -46,7 +46,7 @@
     }
 
     if($errori == ""){
-      $_SESSION["TDEE"] = round($_POST["TDEE"], 0);
+      $_SESSION["TDEE"] = $_POST["TDEE"];
       header('Location: risultato.php');
     }
 	}else{

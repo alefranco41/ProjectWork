@@ -2,8 +2,6 @@
 session_start();
 include('../FunzioniPHP/Funzioni.php');
 
-$TDEE = $_SESSION["TDEE"];
-
 $giorni = [
     'Lunedì',
     'Martedì',
@@ -22,21 +20,8 @@ if(!array_key_exists("invia", $_POST)){
 
   if(count($righe) == 0){
     header('Location: risultato.php');
-  }else{
-    if($TDEE == 0){
-      $TDEE = $righe[0]["TDEE"];
-      if($TDEE == 0){
-        header('Location: TDEE.php');
-      }
-    }else{
-      $sql = "UPDATE utente SET TDEE = '$TDEE' WHERE username = '$u' AND password = '$p'";
-      $righe = eseguiquery($sql);
-
-    }
   }
 }else{
-
-
   $nodes = array();
 
 
@@ -46,24 +31,12 @@ if(!array_key_exists("invia", $_POST)){
       $to = $from+1;
       $randomAPI = array_rand($APIkey, 1);
       $mealtype = tipoPasto($j, $_POST["pasti"]);
-      $rangeCalorie = calcoloRange($mealtype, $_POST["pasti"], $TDEE);
-      $fromCalories = round($rangeCalorie * 0.95);
-      $toCalories = round($rangeCalorie * 1.05);
-      if($_POST["dieta"] == '-'){
-        $dieta = "";
-      }else{
-        $dieta = "&health=" . $_POST["dieta"];
-      }
-
       $query = "https://api.edamam.com/search?q=";
       $query.= "&cuisineType=italian";
       $query.= "&from=$from";
       $query.= "&to=$to";
       $query.= "$mealtype";
-      $query.= "$dieta";
-      $query.= "&calories={$fromCalories}-{$toCalories}";
       $query.= "&app_id={$APIkey[$randomAPI][0]}&app_key={$APIkey[$randomAPI][1]}";
-      echo $query;
       array_push($nodes, $query);
     }
 
@@ -127,13 +100,13 @@ $html = "<!DOCTYPE html>
 
     Tipo di dieta:
     <select id='dieta' name='dieta'>
-      <option value='-' selected>Nessuna preferenza</option>
-      <option value='dairy-free'>senza lattosio</option>
-      <option value='gluten-free'>senza glutine</option>
-      <option value='keto-friendly'>chetogenica</option>
+      <option value='default' selected>Nessuna preferenza</option>
+      <option value='senza-lattosio'>senza lattosio</option>
+      <option value='senza-glutine'>senza glutine</option>
+      <option value='chetogenica'>chetogenica</option>
       <option value='paleo'>paleo</option>
-      <option value='vegetarian'>vegetariana</option>
-      <option value='vegan'>vegana</option>
+      <option value='vegetariana'>vegetariana</option>
+      <option value='vegana'>vegana</option>
     </select><br>
 
     Numero pasti giornalieri:

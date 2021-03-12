@@ -3,7 +3,9 @@ session_start();
 include('../FunzioniPHP/Funzioni.php');
 
 
-$TDEE = $_SESSION["TDEE"];
+
+
+$TDEE = (round($_SESSION["TDEE"], 0));
 $_SESSION["ERRORE"] = 0;
 
 if(array_key_exists("login", $_POST)){
