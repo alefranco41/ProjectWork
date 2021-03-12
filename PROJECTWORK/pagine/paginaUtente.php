@@ -2,6 +2,11 @@
 session_start();
 include('../FunzioniPHP/Funzioni.php');
 
+<<<<<<< HEAD
+=======
+$TDEE = $_SESSION["TDEE"];
+
+>>>>>>> parent of b2151b1 (riempimento tabella con ricette)
 $giorni = [
     'Lunedì',
     'Martedì',
@@ -20,6 +25,20 @@ if(!array_key_exists("invia", $_POST)){
 
   if(count($righe) == 0){
     header('Location: risultato.php');
+<<<<<<< HEAD
+=======
+  }else{
+    if($TDEE == 0){
+      $TDEE = $righe[0]["TDEE"];
+      if($TDEE == 0){
+        header('Location: TDEE.php');
+      }
+    }else{
+      $sql = "UPDATE utente SET TDEE = '$TDEE' WHERE username = '$u' AND password = '$p'";
+      $righe = eseguiquery($sql);
+
+    }
+>>>>>>> parent of b2151b1 (riempimento tabella con ricette)
   }
 }else{
   $nodes = array();
@@ -31,12 +50,25 @@ if(!array_key_exists("invia", $_POST)){
       $to = $from+1;
       $randomAPI = array_rand($APIkey, 1);
       $mealtype = tipoPasto($j, $_POST["pasti"]);
+<<<<<<< HEAD
+=======
+      $rangeCalorie = calcoloRange($mealtype, $_POST["pasti"], $TDEE);
+      $fromCalories = round($rangeCalorie * 0.95);
+      $toCalories = round($rangeCalorie * 1.05);
+      if($_POST["dieta"] == '-'){
+        $dieta = "";
+      }else{
+        $dieta = "&health=" . $_POST["dieta"];
+      }
+
+>>>>>>> parent of b2151b1 (riempimento tabella con ricette)
       $query = "https://api.edamam.com/search?q=";
       $query.= "&cuisineType=italian";
       $query.= "&from=$from";
       $query.= "&to=$to";
       $query.= "$mealtype";
       $query.= "&app_id={$APIkey[$randomAPI][0]}&app_key={$APIkey[$randomAPI][1]}";
+      echo $query;
       array_push($nodes, $query);
     }
 
