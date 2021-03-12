@@ -2,29 +2,8 @@
 session_start();
 include('../FunzioniPHP/Funzioni.php');
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-$TDEE = $_SESSION["TDEE"];
 
->>>>>>> parent of b2151b1 (riempimento tabella con ricette)
-=======
-=======
->>>>>>> parent of b2151b1 (riempimento tabella con ricette)
-$TDEE = $_SESSION["TDEE"];
 
->>>>>>> parent of b2151b1 (riempimento tabella con ricette)
-=======
-$TDEE = $_SESSION["TDEE"];
-
->>>>>>> parent of b2151b1 (riempimento tabella con ricette)
-=======
-$TDEE = $_SESSION["TDEE"];
-
->>>>>>> parent of b2151b1... riempimento tabella con ricette
 $giorni = [
     'Lunedì',
     'Martedì',
@@ -35,58 +14,71 @@ $giorni = [
     'Domenica'
 ];
 
+
+
 if(!array_key_exists("invia", $_POST)){
   $u = $_POST["username"];
   $p = encrypt_decrypt("encrypt", $_POST["password"]);
+
+  $_SESSION["username"] = $u;
+  $_SESSION["password"] = $p;
+
   $sql = "SELECT * FROM utente WHERE username = '$u' AND password = '$p'";
   $righe = eseguiquery($sql);
 
   if(count($righe) == 0){
     header('Location: risultato.php');
-<<<<<<< HEAD
-=======
   }else{
-    if($TDEE == 0){
+    if(!array_key_exists("TDEE", $_SESSION)){
       $TDEE = $righe[0]["TDEE"];
       if($TDEE == 0){
         header('Location: TDEE.php');
       }
     }else{
+      $TDEE = $_SESSION["TDEE"];
       $sql = "UPDATE utente SET TDEE = '$TDEE' WHERE username = '$u' AND password = '$p'";
       $righe = eseguiquery($sql);
 
     }
->>>>>>> parent of b2151b1 (riempimento tabella con ricette)
   }
 }else{
+
+
   $nodes = array();
+  $id = $_SESSION["username"];
+  $pass = $_SESSION["password"];
+
+  if(array_key_exists("TDEE", $_SESSION)){
+    $TDEE = $_SESSION["TDEE"];
+  }else{
+    $sql = "SELECT * FROM utente WHERE username = '$id' AND password = '$pass'";
+    $righe = eseguiquery($sql);
+    $TDEE = $righe[0]["TDEE"];
+  }
 
 
   for ($i=0; $i<7; $i++) {
     for ($j=0; $j<$_POST["pasti"]; $j++) {
-      $from = rand(0, 99);
-      $to = $from+1;
       $randomAPI = array_rand($APIkey, 1);
       $mealtype = tipoPasto($j, $_POST["pasti"]);
-<<<<<<< HEAD
-=======
       $rangeCalorie = calcoloRange($mealtype, $_POST["pasti"], $TDEE);
       $fromCalories = round($rangeCalorie * 0.95);
       $toCalories = round($rangeCalorie * 1.05);
+
       if($_POST["dieta"] == '-'){
         $dieta = "";
       }else{
         $dieta = "&health=" . $_POST["dieta"];
       }
 
->>>>>>> parent of b2151b1 (riempimento tabella con ricette)
       $query = "https://api.edamam.com/search?q=";
       $query.= "&cuisineType=italian";
-      $query.= "&from=$from";
-      $query.= "&to=$to";
+      $query.= "&from=0";
+      $query.= "&to=100";
       $query.= "$mealtype";
+      $query.= "$dieta";
+      $query.= "&calories={$fromCalories}-{$toCalories}";
       $query.= "&app_id={$APIkey[$randomAPI][0]}&app_key={$APIkey[$randomAPI][1]}";
-      echo $query;
       array_push($nodes, $query);
     }
 
@@ -104,7 +96,7 @@ if(!array_key_exists("invia", $_POST)){
    $righe = $_POST["pasti"];
    $colonne = 8;
 
-   $tabella = "<table>";
+   $tabella = "<table id='tabellaPasti'>";
    for ($i=0; $i<$righe; $i++) {
      if($i == 0){
        $tabella .= "<tr>";
@@ -115,7 +107,12 @@ if(!array_key_exists("invia", $_POST)){
        $tabella .= "</tr>";
      }
      for($j=0; $j<$colonne; $j++){
-       $tabella .= "<td class='sasso'>ciao</td>";
+       if($j == 0){
+         $npasto = $i + 1;
+         $tabella .= "<td class='contGiorni'>pasto $npasto </td>";
+       }else{
+         $tabella .= "<td class='pasto'></td>";
+       }
      }
      $tabella .= "</tr>";
 
@@ -150,13 +147,13 @@ $html = "<!DOCTYPE html>
 
     Tipo di dieta:
     <select id='dieta' name='dieta'>
-      <option value='default' selected>Nessuna preferenza</option>
-      <option value='senza-lattosio'>senza lattosio</option>
-      <option value='senza-glutine'>senza glutine</option>
-      <option value='chetogenica'>chetogenica</option>
+      <option value='-' selected>Nessuna preferenza</option>
+      <option value='dairy-free'>senza lattosio</option>
+      <option value='gluten-free'>senza glutine</option>
+      <option value='keto-friendly'>chetogenica</option>
       <option value='paleo'>paleo</option>
-      <option value='vegetariana'>vegetariana</option>
-      <option value='vegana'>vegana</option>
+      <option value='vegetarian'>vegetariana</option>
+      <option value='vegan'>vegana</option>
     </select><br>
 
     Numero pasti giornalieri:
