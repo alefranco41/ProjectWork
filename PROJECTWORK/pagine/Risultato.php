@@ -3,7 +3,18 @@ session_start();
 include('../FunzioniPHP/Funzioni.php');
 
 
-$TDEE = $_SESSION["TDEE"];
+if(!array_key_exists("TDEE", $_SESSION)){
+  $messaggio = "Effettua il Login";
+}else{
+  $TDEE = $_SESSION['TDEE'];
+  if(isset($_SESSION['username'])){
+    $utente = $_SESSION['username'];
+  }else{
+    $utente = "utente";
+  }
+  $messaggio = "Benvenuto $utente, in base ai dati inseriti, il tuo fabbisogno calorico giornaliero risulta essere di $TDEE kcal";
+}
+
 $_SESSION["ERRORE"] = 0;
 
 if(array_key_exists("login", $_POST)){
@@ -34,8 +45,7 @@ $html = "<!DOCTYPE html>
   </head>
 
   <body>
-    <p>Benvenuto Utente, in base ai dati inseriti, il tuo fabbisogno calorico giornaliero risulta essere di $TDEE kcal </p>
-    <p>Per poter usufruire dei nostri servizi, è necessario eseguire il Login</p>
+    <p>$messaggio</p>
       <div class='wrapper fadeInDown'>
         <div id='formContent'>
           <div class='fadeIn first'>

@@ -1,4 +1,5 @@
 <?php
+  include('../FunzioniPHP/Funzioni.php');
   session_start();
   if (array_key_exists("invia", $_POST)) {
     $errori = "";
@@ -7,7 +8,6 @@
     }
     if(!is_numeric($_POST["Peso"]) || (($_POST["Peso"]<1) || ($_POST["Peso"]>635))){
       $errori .= "Errore peso <br>";
-      //ciao bro
     }
     if((($_POST["formule"] != "km") && ($_POST["formule"] != "s")) && (!is_numeric($_POST["Altezza"]) || $_POST["Altezza"] < 50 || $_POST["Altezza"] > 251)){
       $errori .= "Errore altezza <br>";
@@ -47,10 +47,19 @@
 
     if($errori == ""){
       $_SESSION["TDEE"] = round($_POST["TDEE"], 0);
+      if(isset($_SESSION['username'])){
+        $sql = "UPDATE utente SET TDEE = '{$_SESSION['TDEE']}' WHERE username = '{$_SESSION['username']}' AND password = '{$_SESSION['password']}'";
+        eseguiquery($sql);
+      }
       header('Location: risultato.php');
     }
 	}else{
-    $errori = "";
+    if(isset($_SESSION['username'])){
+      $errori = "Benvenuto {$_SESSION['username']}, inserisci i tuoi dati per scoprire il tuo TDEE";
+    }else{
+      $errori = "Benvenuto utente, inserisci i tuoi dati per scoprire il tuo TDEE";
+    }
+
   }
 
 

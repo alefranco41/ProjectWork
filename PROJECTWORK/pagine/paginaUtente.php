@@ -1,7 +1,6 @@
 <?php
-session_start();
 include('../FunzioniPHP/Funzioni.php');
-
+session_start();
 
 
 $giorni = [
@@ -17,6 +16,8 @@ $giorni = [
 
 
 if(!array_key_exists("invia", $_POST)){
+  $length = 0;
+  $tabella = "";
   $u = $_POST["username"];
   $p = encrypt_decrypt("encrypt", $_POST["password"]);
 
