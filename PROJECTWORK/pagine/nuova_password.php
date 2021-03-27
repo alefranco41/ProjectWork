@@ -21,8 +21,8 @@ if(isset($_GET['hash']) && isset($_POST['invia'])){
 		$mess_invio="<html><body>";
 
 		$mess_invio.="
-		La sua nuova password utente è ".$password."<br />
-		Ora puoi accedere all'area <a href='Risultato.php' style=\"color: red\">Login</a>.
+		La sua password utente è stata cambiata<br />
+		Ora puoi accedere all'area <a href='http://80.181.245.128/projectwork/PROJECTWORK/pagine/paginautente.php' style=\"color: red\">Login</a>.
 		";
 
 		$mess_invio.='</body><html>';

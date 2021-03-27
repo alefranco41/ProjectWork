@@ -20,15 +20,12 @@ if(isset($_POST['email'])){
   //se non ci sono stati errori, invio l’email all’utente con il link da confermare
   if($errore==0){
 
-    $subject= "sito.it - Nuova password utente";
+    $subject= "ProjectWork - Richiesta di cambiamento password";
 
     $mess_invio="<html><body>";
 
     $mess_invio.="
-    Clicca sul <a href=\"http://localhost/projectwork/PROJECTWORK/pagine/nuova_password.php?hash=".$hash."\">link</a> per confermare la nuova password.<br />
-    Se il link non è visibile, copia la riga qui sotto e incollala sul tuo browser: <br />
-    http://localhost/pw/PROJECTWORK/pagine/nuova_password.php?hash=".$hash."
-    ";
+    Clicca sul <a href=\"http://80.181.245.128/projectwork/PROJECTWORK/pagine/nuova_password.php?hash=".$hash."\">link</a> per impostare una nuova password.<br/>";
 
     $mess_invio.='</body><html>';
 

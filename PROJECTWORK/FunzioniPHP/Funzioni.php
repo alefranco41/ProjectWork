@@ -257,6 +257,7 @@ function inviaMail($to, $subject, $content){
 
 	//Check if mail is sent :
 	if(!$mailer->send()) {
+			echo $mailer->ErrorInfo;
 	    echo "Email non inviata";
 	} else {
 		echo "Email inviata con successo. Controlla la tua email<br /><br />";
