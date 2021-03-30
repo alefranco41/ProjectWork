@@ -147,7 +147,7 @@ $html = "<!DOCTYPE html>
   <form method='POST' action='paginaUtente.php'>
     <input type='hidden' name='jsonarray' value='$length' id='hidden'>
 
-    Tipo di dieta:
+    Tipo di dieta: 
     <select id='dieta' name='dieta'>
       <option value='-' selected>Nessuna preferenza</option>
       <option value='dairy-free'>senza lattosio</option>

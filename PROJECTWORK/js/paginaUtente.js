@@ -45,7 +45,7 @@ function compilaTabella(t,c,f){
   var arrayCaselle = document.getElementsByClassName("pasto");
   if(arrayCaselle.length == t.length){
     for(var i=0; i<arrayCaselle.length; i++){
-      arrayCaselle[i].innerHTML = "Ricetta: " + t[i] + "<br>" + "Calorie: " + Math.round(c[i]) + "<br>" + "<img src='" + f[i] + "'></img>";
+      arrayCaselle[i].innerHTML = "<span class = 'testo'> Ricetta: " + t[i] + "<br>" + "Calorie: " + Math.round(c[i]) + "<br>" + "<img src='" + f[i] + "'></img></span>";
     }
   }else{
     for(var i=0; i<arrayCaselle.length; i++){
