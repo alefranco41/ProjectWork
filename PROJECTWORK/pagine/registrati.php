@@ -74,11 +74,11 @@ if(array_key_exists("registrati", $_POST)){
     if(array_key_exists('TDEE', $_SESSION)){
       $sql = "INSERT INTO utente (username, password, password_hashed, nome, cognome, email, TDEE) VALUES ('{$_POST['username']}', '$pass', '$hashed_password', '{$_POST['nome']}', '{$_POST['cognome']}', '{$_POST['email']}', '{$_SESSION['TDEE']}')";
       eseguiquery($sql);
-      header('Location: paginaUtente.php');
+      header('Location: risultato.php');
     }else{
-      $sql = "INSERT INTO utente (username, password, password_hashed, nome, cognome, email) VALUES ('{$_POST['username']}', '$pass', '$hashed_password', '{$_POST['nome']}', '{$_POST['cognome']}', '{$_POST['email']}')";
+      $sql = "INSERT INTO utente (username, password, password_hashed, nome, cognome, email, TDEE) VALUES ('{$_POST['username']}', '$pass', '$hashed_password', '{$_POST['nome']}', '{$_POST['cognome']}', '{$_POST['email']}', 0)";
       eseguiquery($sql);
-      header('Location: tdee.php');
+      header('Location: risultato.php');
     }
 
 

@@ -68,7 +68,10 @@ require_once '../mail/class.smtp.php';
 				for($i = 0; $i < $node_count; $i++){
 			    $url =$nodes[$i];
 			    $curl_arr[$i] = curl_init($url);
-			    curl_setopt($curl_arr[$i], CURLOPT_RETURNTRANSFER, true);
+					curl_setopt($curl_arr[$i], CURLOPT_RETURNTRANSFER, true);
+					curl_setopt($curl_arr[$i], CURLOPT_SSL_VERIFYPEER, false);
+
+
 			    curl_multi_add_handle($master, $curl_arr[$i]);
 				}
 				do {
@@ -77,9 +80,27 @@ require_once '../mail/class.smtp.php';
 
 				for($i = 0; $i < $node_count; $i++){
 			    $results = curl_multi_getcontent  ($curl_arr[$i]);
+
 					array_push($apiResultArray, $results);
 				}
+
+
 				return $apiResultArray;
+			}
+
+			function calcoloTDEE($obiettivo, $TDEE){
+				if($obiettivo == 1){
+					return $TDEE;
+				}else if($obiettivo == 2){
+					return $TDEE - 300;
+				}
+				else if($obiettivo == 3){
+					return $TDEE - 500;
+				}else if($obiettivo == 4){
+					return $TDEE + 300;
+				}else if($obiettivo == 5){
+					return $TDEE + 500;
+				}
 			}
 
 			function tipoPasto($j, $pasti){
