@@ -1,5 +1,3 @@
-<?php
-$html = "<!DOCTYPE html>
   <html>
     <body>
       <p>
@@ -7,8 +5,7 @@ $html = "<!DOCTYPE html>
       </p>
     </body>
   </html>
-";
 
-print($html);
+<?php
   header('Location: risultato.php');
  ?>
