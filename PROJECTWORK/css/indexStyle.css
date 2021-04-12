@@ -1,3 +1,34 @@
-#campi > div:nth-child(n+7){
+#nascosta{
     display: none;
+}
+
+
+body {
+    text-align: center;
+}
+form {
+    display: inline-block;
+    --background: white;
+--border: rgba(0, 0, 0, 0.125);
+--borderDark: rgba(0, 0, 0, 0.25);
+--borderDarker: rgba(0, 0, 0, 0.5);
+--bgColorH: 0;
+--bgColorS: 0%;
+--bgColorL: 98%;
+--fgColorH: 210;
+--fgColorS: 50%;
+--fgColorL: 38%;
+--shadeDark: 0.3;
+--shadeLight: 0.7;
+--shadeNormal: 0.5;
+--borderRadius: 0.125rem;
+--highlight: #306090;
+background: white;
+border: 1px solid var(--border);
+border-radius: var(--borderRadius);
+box-shadow: 0 1rem 1rem -0.75rem var(--border);
+flex-direction: column;
+padding: 1rem;
+position: relative;
+overflow: hidden;
 }

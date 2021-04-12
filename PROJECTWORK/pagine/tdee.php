@@ -71,48 +71,106 @@ $html = "<!DOCTYPE html>
   <html lang='en' dir='ltr'>
 
   <head>
+
+
+
+
     <meta charset='utf-8'>
     <title>ProjectWork</title>
     <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css' integrity='sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm' crossorigin='anonymous'>
     <script src='../js/BMR.js' charset='utf-8'></script>
+    <link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/bulma@0.9.2/css/bulma.min.css'>
     <link rel='stylesheet' href='../css/indexStyle.css'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
   </head>
 
   <body>
-      <div id='errori'>
+
+  <nav class='level'>
+    <p class='level-item has-text-centered'>
+      <a class='link is-info'>Home</a>
+    </p>
+    <p class='level-item has-text-centered'>
+      <a class='link is-info'>Menu</a>
+    </p>
+    <p class='level-item has-text-centered'>
+
+    </p>
+    <p class='level-item has-text-centered'>
+      <a class='link is-info'>Reservations</a>
+    </p>
+    <p class='level-item has-text-centered'>
+      <a class='link is-info'>Contact</a>
+    </p>
+  </nav>
+      <div id='errori' class='has-text-weight-bold'>
         $errori
       </div>
       <form method='POST' action='tdee.php'>
-        Formula:
-        <select id='formula' name='formule' onchange='controlloFormula(this.value);'>
-          <option value='default' selected hidden>Seleziona</option>
-          <option value='hb'>Harris-Benedict</option>
-          <option value='rhb'>Harris-Benedict Revisionata</option>
-          <option value='msj'>Mifflin-St Jeor</option>
-          <option value='km'>Katch-McArdle</option>
-          <option value='s'>Schofield</option>
-        </select><br>
+        <div class='field'>
+          <label class='label'>Formula</label>
+            <div class='control'>
+              <div class='select'>
+                <select id='formula' name='formule' onchange='controlloFormula(this.value);'>
+                  <option value='default' selected hidden>Seleziona</option>
+                  <option value='hb'>Harris-Benedict</option>
+                  <option value='rhb'>Harris-Benedict Revisionata</option>
+                  <option value='msj'>Mifflin-St Jeor</option>
+                  <option value='km'>Katch-McArdle</option>
+                  <option value='s'>Schofield</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
 
         <div class='campi' id='campi'>
-          <div class='input'>Sesso:<input type='radio' id='maschio' name='Sesso' value='m' disabled='disabled'> Maschio <input type='radio' id='femmina' name='Sesso' value='f' disabled='disabled'> Femmina<br></div>
-          <div class='input'>Peso: <input type='text' name='Peso' id='Peso' disabled='disabled'><br></div>
-          <div class='input'>Altezza: <input type='text' name='Altezza' id='Altezza' disabled='disabled'><br></div>
-          <div class='input'>Età: <input type='text' name='Eta' id='Età' disabled='disabled'><br></div>
-          <div class='input'>Massa Grassa: <input type='text' name='MassaGrassa' id='MassaGrassa' disabled='disabled'><br></div>
-          <div class='input'>Allenamento:<input type='radio' id='si' name='Allenamento' value='si' disabled='disabled' onchange='controlloAllenamento()'> Si <input type='radio' id='no' name='Allenamento' value='no' disabled='disabled' onchange='controlloAllenamento()'> No<br></div>
-          <div class='input'>Cardio:<input type='radio' id='si' name='Cardio' value='si' disabled='disabled' onchange='controlloCardio()'> Si <input type='radio' id='no' name='Cardio' value='no' disabled='disabled' onchange='controlloCardio()'> No<br></div>
-          <div class='input'>N° Giorni: <input type='text' name='GiorniCardio' id='GiorniCardio' disabled='disabled'><br> </div>
-          <div class='input'>Pesi:<input type='radio' id='si' name='Pesi' value='si' disabled='disabled' onchange='controlloPesi()'> Si <input type='radio' id='no' name='Pesi' value='no' disabled='disabled' onchange='controlloPesi()'> No<br></div>
-          <div class='input'>N° Giorni: <input type='text' name='GiorniPesi' id='GiorniPesi' disabled='disabled'><br> </div>
-          Stile di vita: <select id='lavoro' name='lavoro' disabled='disabled'>
-            <option value='default' selected hidden>Seleziona</option>
-            <option value='1'>Sedentario</option>
-            <option value='2'>Leggermente attivo</option>
-            <option value='3'>Moderatamente attivo</option>
-            <option value='4'>Estremamente attivo</option>
-          </select><br>
+        <label class='label'>Sesso</label>
+          <div class='field'>
+            <div class='control'>
+              <label class='radio'>
+                <input type='radio' id='maschio' name='Sesso' value='m' disabled='disabled'>
+                  Maschio
+              </label>
+
+              <label class='radio'>
+                <input type='radio' id='femmina' name='Sesso' value='f' disabled='disabled'>
+                  Femmina
+              </label>
+            </div>
+          </div>
+
+          <div class='field'><label class='label'>Peso</label><input type='text' class='input' name='Peso' id='Peso' placeholder='Inserisci il tuo peso' disabled='disabled'><br></div>
+          <div class='field'><label class='label'>Altezza</label><input type='text' class='input' name='Altezza' id='Altezza' placeholder='Inserisci la tua altezza' disabled='disabled'><br></div>
+          <div class='field'><label class='label'>Età</label><input type='text' class='input' name='Eta' id='Età' placeholder='Inserisci la tua età' disabled='disabled'><br></div>
+          <div class='field'><label class='label'>Massa Grassa</label><input type='text' class='input' name='MassaGrassa' id='MassaGrassa' placeholder='Inserisci la tua percentuale di massa grassa' disabled='disabled'><br></div>
+          <div class='field'><label class='label'>Allenamento</label><input type='radio' id='si' name='Allenamento' value='si' disabled='disabled' onchange='controlloAllenamento()'> Si <input type='radio' id='no' name='Allenamento' value='no' disabled='disabled' onchange='controlloAllenamento()'> No<br></div>
+          <div class='field' id='nascosta'><label class='label'>Cardio</label>Cardio:<input type='radio' id='si' name='Cardio' value='si' disabled='disabled' onchange='controlloCardio()'> Si <input type='radio' id='no' name='Cardio' value='no' disabled='disabled' onchange='controlloCardio()'> No<br></div>
+          <div class='field' id='nascosta'><label class='label'>Giorni Cardio</label><input type='text' class='input' name='GiorniCardio' id='GiorniCardio' placeholder='Inserisci quanti giorni fai cardio' disabled='disabled'><br> </div>
+          <div class='field' id='nascosta'><label class='label'>Pesi</label><input type='radio' id='si' name='Pesi' value='si' disabled='disabled' onchange='controlloPesi()'> Si <input type='radio' id='no' name='Pesi' value='no' disabled='disabled' onchange='controlloPesi()'> No<br></div>
+          <div class='field' ><label class='label'>Giorni Pesi</label><input type='text' class='input' name='GiorniPesi' id='GiorniPesi' placeholder='Inserisci quanti giorni fai pesi' disabled='disabled'><br> </div>
+
+
+          <div class='field'>
+            <label class='label'>Stile di vita</label>
+              <div class='control'>
+                <div class='select'>
+                  <select id='lavoro' name='lavoro' disabled='disabled'>
+                    <option value='default' selected hidden>Seleziona</option>
+                    <option value='1'>Sedentario</option>
+                    <option value='2'>Leggermente attivo</option>
+                    <option value='3'>Moderatamente attivo</option>
+                    <option value='4'>Estremamente attivo</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+
           <input type='hidden' id='TDEE' name='TDEE'>
-          <input type='submit' name='invia' onclick='bmr()' disabled='disabled'>
+
+          <div class='control'>
+            <button class='button is-primary' onclick='bmr()' disabled='disabled'>Invia</button>
+          </div>
       </form>
     </div>
 

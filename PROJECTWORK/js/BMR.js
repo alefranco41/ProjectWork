@@ -1,5 +1,5 @@
 var metabolismoBasale = 0;
-var spanArray = document.getElementsByClassName("input");
+var spanArray = document.getElementsByClassName("field");
 
 
 var inputArray = document.getElementsByTagName('input');
