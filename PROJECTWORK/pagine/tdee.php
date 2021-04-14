@@ -2,50 +2,50 @@
   include('../FunzioniPHP/Funzioni.php');
   session_start();
   if (array_key_exists("invia", $_POST)) {
-    $errori = "";
+    $errori = array();
     if (!array_key_exists('Sesso', $_POST) && ($_POST["formule"] != "km")) {
-      $errori .= "Errore sesso <br>";
+      array_push($errori, "Sesso");
     }
-    if(!is_numeric($_POST["Peso"]) || (($_POST["Peso"]<1) || ($_POST["Peso"]>635))){
-      $errori .= "Errore peso <br>";
+    if(!array_key_exists('Peso', $_POST) || (!is_numeric($_POST["Peso"]) || (($_POST["Peso"]<1) || ($_POST["Peso"]>635)))){
+      array_push($errori, "Peso");
     }
-    if((($_POST["formule"] != "km") && ($_POST["formule"] != "s")) && (!is_numeric($_POST["Altezza"]) || $_POST["Altezza"] < 50 || $_POST["Altezza"] > 251)){
-      $errori .= "Errore altezza <br>";
+    if(!array_key_exists('Altezza', $_POST) || ((($_POST["formule"] != "km") && ($_POST["formule"] != "s")) && (!is_numeric($_POST["Altezza"]) || $_POST["Altezza"] < 50 || $_POST["Altezza"] > 251))){
+      array_push($errori, "Altezza");
     }
-    if(($_POST["formule"] != "km") && (!is_numeric($_POST["Eta"]) || $_POST["Eta"] < 0 || $_POST["Eta"] > 118)){
-      $errori .= "Errore Età <br>";
+    if(!array_key_exists('Eta', $_POST) || (($_POST["formule"] != "km") && (!is_numeric($_POST["Eta"]) || $_POST["Eta"] < 0 || $_POST["Eta"] > 118))){
+      array_push($errori, "Eta");
     }
     if(($_POST["formule"] == "km") && (!is_numeric($_POST["MassaGrassa"]) || $_POST["MassaGrassa"] < 2 || $_POST["MassaGrassa"] > 80)){
-      $errori .= "Errore Massa Grassa <br>";
+      array_push($errori, "MassaGrassa");
     }
     if (!array_key_exists('Allenamento', $_POST)) {
-      $errori .= "Errore Allenamento <br>";
+    array_push($errori, "Allenamento");
     }
 
     if (!array_key_exists('Cardio', $_POST) && array_key_exists('Allenamento', $_POST) && $_POST["Allenamento"] == "si"){
-        $errori .= "Errore Cardio <br>";
+        array_push($errori, "Cardio");
     }
 
     if (array_key_exists('Cardio', $_POST) && array_key_exists('Allenamento', $_POST) && $_POST["Cardio"] == "si" && $_POST["Allenamento"] == "si"){
       if(!is_numeric($_POST["GiorniCardio"]) || $_POST["GiorniCardio"] < 0 || $_POST["GiorniCardio"] > 7){
-        $errori .= "Errore Giorni Cardio <br>";
+        array_push($errori, "GiorniCardio");
       }
     }
 
     if (!array_key_exists('Pesi', $_POST) && array_key_exists('Allenamento', $_POST) && $_POST["Allenamento"] == "si"){
-        $errori .= "Errore Pesi <br>";
+        array_push($errori, "Pesi");
     }
 
     if (array_key_exists('Pesi', $_POST) && array_key_exists('Allenamento', $_POST) && $_POST["Pesi"] == "si" && $_POST["Allenamento"] == "si"){
       if(!is_numeric($_POST["GiorniPesi"]) || $_POST["GiorniPesi"] < 0 || $_POST["GiorniPesi"] > 7){
-        $errori .= "Errore Giorni Pesi <br>";
+        array_push($errori, "GiorniPesi");
       }
     }
-    if($_POST["lavoro"] == "default"){
-      $errori .= "Errore lavoro <br>";
+    if(!array_key_exists('Lavoro', $_POST) || $_POST["lavoro"] == "default"){
+      array_push($errori, "Lavoro");
     }
 
-    if($errori == ""){
+    if(empty($errori)){
       $_SESSION["TDEE"] = round($_POST["TDEE"], 0);
       if(isset($_SESSION['username'])){
         $sql = "UPDATE utente SET TDEE = '{$_SESSION['TDEE']}' WHERE username = '{$_SESSION['username']}' AND password = '{$_SESSION['password']}'";
@@ -62,7 +62,7 @@
 
   }
 
-
+print_r($errori);
 
 
 
@@ -104,7 +104,7 @@ $html = "<!DOCTYPE html>
     </p>
   </nav>
       <div id='errori' class='has-text-weight-bold'>
-        $errori
+
       </div>
       <form method='POST' action='tdee.php'>
         <div class='field'>
@@ -125,8 +125,8 @@ $html = "<!DOCTYPE html>
 
 
         <div class='campi' id='campi'>
-        <label class='label'>Sesso</label>
           <div class='field'>
+            <label class='label'>Sesso</label>
             <div class='control'>
               <label class='radio'>
                 <input type='radio' id='maschio' name='Sesso' value='m' disabled='disabled'>
@@ -169,7 +169,7 @@ $html = "<!DOCTYPE html>
           <input type='hidden' id='TDEE' name='TDEE'>
 
           <div class='control'>
-            <button class='button is-primary' onclick='bmr()' disabled='disabled'>Invia</button>
+            <button class='button is-primary' onclick='bmr()' name='invia'>Invia</button>
           </div>
       </form>
     </div>

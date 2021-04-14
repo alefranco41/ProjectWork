@@ -43,26 +43,26 @@ function controlloFormula(formula) {
   f = formula;
   valoriDefault();
   if(formula == "km"){
-    nascondi([0,2,3]);
-    rimuoviDisabled([2,5,6,7,15]);
+    nascondi([1,3,4,10]);
+    rimuoviDisabled([2,5,6,7]);
     aggiungiDisabled([0,1,3,4,8,9,10,11,12,13]);
   }else if(formula == "s"){
-    nascondi([2,4]);
-    rimuoviDisabled([0,1,2,4,6,7,15]);
+    nascondi([3,5,10]);
+    rimuoviDisabled([0,1,2,4,6,7]);
     aggiungiDisabled([3,5,8,9,10,11,12,13]);
   }else if(formula == "hb" || formula == "rhb" || formula == "msj"){
-    nascondi([4]);
-    rimuoviDisabled([0,1,2,3,4,6,7,15]);
+    nascondi([5,10]);
+    rimuoviDisabled([0,1,2,3,4,6,7]);
     aggiungiDisabled([5,8,9,10,11,12,13]);
   }
 }
 
 function controlloAllenamento() {
   if(allenamento[0].checked){
-    visualizza([6,8]);
+    visualizza([7,9]);
     rimuoviDisabled([8,9,11,12]);
   }else{
-    nascondi([6,7,8,9]);
+    nascondi([7,8,9,10]);
     aggiungiDisabled([8,9,11,12]);
     cardio[1].checked = "true";
     pesi[1].checked = "true";
@@ -71,20 +71,20 @@ function controlloAllenamento() {
 
 function controlloCardio() {
   if(cardio[0].checked){
-    visualizza([7]);
+    visualizza([8]);
     rimuoviDisabled([10]);
   }else{
-    nascondi([7]);
+    nascondi([8]);
     aggiungiDisabled([10]);
   }
 }
 
 function controlloPesi() {
   if(pesi[0].checked){
-    visualizza([9]);
+    visualizza([10]);
     rimuoviDisabled([13]);
   }else{
-    nascondi([9]);
+    nascondi([10]);
     aggiungiDisabled([13]);
   }
 }
