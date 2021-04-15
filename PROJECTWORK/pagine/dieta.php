@@ -105,7 +105,6 @@ if($TDEE != 0){
 
 
 
-
 $html = "<!DOCTYPE html>
   <html lang='en' dir='ltr'>
   <head>

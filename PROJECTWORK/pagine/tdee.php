@@ -9,12 +9,18 @@
     if(!array_key_exists('Peso', $_POST) || (!is_numeric($_POST["Peso"]) || (($_POST["Peso"]<1) || ($_POST["Peso"]>635)))){
       array_push($errori, "Peso");
     }
-    if(!array_key_exists('Altezza', $_POST) || ((($_POST["formule"] != "km") && ($_POST["formule"] != "s")) && (!is_numeric($_POST["Altezza"]) || $_POST["Altezza"] < 50 || $_POST["Altezza"] > 251))){
-      array_push($errori, "Altezza");
+    if(array_key_exists("Altezza", $_POST)){
+      if(((($_POST["formule"] != "km") && ($_POST["formule"] != "s")) && (!is_numeric($_POST["Altezza"]) || $_POST["Altezza"] < 50 || $_POST["Altezza"] > 251))){
+        array_push($errori, "Altezza");
+      }
     }
-    if(!array_key_exists('Eta', $_POST) || (($_POST["formule"] != "km") && (!is_numeric($_POST["Eta"]) || $_POST["Eta"] < 0 || $_POST["Eta"] > 118))){
-      array_push($errori, "Eta");
+
+    if(array_key_exists("Eta", $_POST)){
+      if((($_POST["formule"] != "km") && (!is_numeric($_POST["Eta"]) || $_POST["Eta"] < 0 || $_POST["Eta"] > 118))){
+        array_push($errori, "Eta");
+      }
     }
+
     if(($_POST["formule"] == "km") && (!is_numeric($_POST["MassaGrassa"]) || $_POST["MassaGrassa"] < 2 || $_POST["MassaGrassa"] > 80)){
       array_push($errori, "MassaGrassa");
     }
@@ -41,9 +47,11 @@
         array_push($errori, "GiorniPesi");
       }
     }
-    if(!array_key_exists('Lavoro', $_POST) || $_POST["lavoro"] == "default"){
-      array_push($errori, "Lavoro");
+    if(!array_key_exists('lavoro', $_POST) || $_POST["lavoro"] == "default"){
+      array_push($errori, "lavoro");
     }
+
+
 
     if(empty($errori)){
       $_SESSION["TDEE"] = round($_POST["TDEE"], 0);
@@ -52,7 +60,10 @@
         eseguiquery($sql);
       }
       header('Location: risultato.php');
+    }else{
+      $errori = implode(",",$errori);
     }
+
 	}else{
     if(isset($_SESSION['username'])){
       $errori = "Benvenuto {$_SESSION['username']}, inserisci i tuoi dati per scoprire il tuo TDEE";
@@ -62,7 +73,6 @@
 
   }
 
-print_r($errori);
 
 
 
@@ -85,6 +95,7 @@ $html = "<!DOCTYPE html>
   </head>
 
   <body>
+
 
   <nav class='level'>
     <p class='level-item has-text-centered'>
@@ -166,7 +177,7 @@ $html = "<!DOCTYPE html>
               </div>
             </div>
 
-          <input type='hidden' id='TDEE' name='TDEE'>
+          <input type='hidden' id='TDEE' name='TDEE' value='$errori'>
 
           <div class='control'>
             <button class='button is-primary' onclick='bmr()' name='invia'>Invia</button>
