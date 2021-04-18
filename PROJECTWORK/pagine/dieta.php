@@ -20,7 +20,9 @@ $TDEE = $righe[0]["TDEE"];
 if($TDEE != 0){
   if(array_key_exists("invia", $_POST)){
     $obiettivo = $_POST["obiettivo"];
+    echo $TDEE;
     $TDEE = calcoloTDEE($obiettivo, $TDEE);
+
     $nodes = array();
     for ($i=0; $i<7; $i++) {
       for ($j=0; $j<$_POST["pasti"]; $j++) {
@@ -51,10 +53,10 @@ if($TDEE != 0){
 
 
 
-    $output = chiamataAPI($nodes);
+    $output = chiamataDieta($nodes);
     $length = count($output);
     $output = json_encode($output);
-    $jsonFile = "../json/chiamataAPI.json";
+    $jsonFile = "../json/chiamataDieta.json";
     file_put_contents($jsonFile, $output);
 
 

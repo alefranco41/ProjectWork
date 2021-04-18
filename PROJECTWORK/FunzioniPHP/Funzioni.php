@@ -3,6 +3,17 @@ require_once '../mail/PHPMailerAutoload.php';
 require_once '../mail/class.phpmailer.php';
 require_once '../mail/class.smtp.php';
 
+
+
+$global_get_params = ["exercisename"=>"burpee"];
+$global_auth_link = "http://204.235.60.194/consumer/login";
+$user_agent = "Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8.1.13) Gecko/20080311 Firefox/2.0.0.13";
+
+ini_set("display_errors", 1);
+ini_set("display_startup_errors", 1);
+error_reporting(E_ALL);
+
+
 	$conn = mysqli_connect("localhost", "root", "", "utenti");
 	if (($conn == false) ||  ($conn -> connect_errno)) {
 		echo "Errore in connessione a MySQL";
@@ -58,8 +69,12 @@ require_once '../mail/class.smtp.php';
 		);
 
 
-		function chiamataAPI($nodes)
+		function chiamataDieta($nodes)
 			{
+
+				$headers = ['Accept-Encoding: gzip'];
+
+
 				$node_count = count($nodes);
 				$apiResultArray = array();
 				$curl_arr = array();
@@ -69,8 +84,9 @@ require_once '../mail/class.smtp.php';
 			    $url =$nodes[$i];
 			    $curl_arr[$i] = curl_init($url);
 					curl_setopt($curl_arr[$i], CURLOPT_RETURNTRANSFER, true);
+					curl_setopt($curl_arr[$i], CURLOPT_HTTPHEADER, $headers);
+					curl_setopt($curl_arr[$i], CURLOPT_ENCODING , "gzip");
 					curl_setopt($curl_arr[$i], CURLOPT_SSL_VERIFYPEER, false);
-
 
 			    curl_multi_add_handle($master, $curl_arr[$i]);
 				}
@@ -87,6 +103,59 @@ require_once '../mail/class.smtp.php';
 
 				return $apiResultArray;
 			}
+
+
+			function jwt_request($token, $get, $nodes) {
+					$node_count = count($nodes);
+					$apiResultArray = array();
+					$curl_arr = array();
+					$master = curl_multi_init();
+					global $user_agent;
+
+					for($i = 0; $i < $node_count; $i++){
+						$url =$nodes[$i];
+						$ch[$i] = curl_init($url . "?" . http_build_query($get)); // Initialise cURL
+		        $data_type = "Content-type: application/json";
+		        $authorization = "Authorization: Bearer $token"; // Prepare the authorisation token
+		        curl_setopt($ch[$i], CURLOPT_USERAGENT, $user_agent); // Fusio requires
+		        curl_setopt($ch[$i], CURLOPT_HTTPHEADER, [$data_type , $authorization]); // Inject the token into the header
+		        curl_setopt($ch[$i], CURLOPT_RETURNTRANSFER, true);  //Return data instead printing directly in Browser
+		        curl_setopt($ch[$i], CURLOPT_POST, false);
+		        curl_setopt($ch[$i], CURLOPT_FOLLOWLOCATION, true); // This will follow any redirects
+						curl_multi_add_handle($master, $ch[$i]);
+					}
+
+					do {
+					    curl_multi_exec($master,$running);
+					} while($running > 0);
+
+					for($i = 0; $i < $node_count; $i++){
+				    $results = curl_multi_getcontent  ($ch[$i]);
+
+						array_push($apiResultArray, $results);
+					}
+
+
+	        return $apiResultArray;
+	 		 }
+
+
+			function jwt_auth_for_token($username, $password) {
+       global $global_auth_link, $user_agent;
+
+       $ch = curl_init($global_auth_link);
+       $data_type = "Content-type: application/json";
+       $post_fields = json_encode(["username"=>$username, "password"=>$password]);
+       curl_setopt($ch, CURLOPT_USERAGENT, $user_agent);
+       curl_setopt($ch, CURLOPT_HTTPHEADER, [$data_type]);
+       curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+       curl_setopt($ch, CURLOPT_POST, true);
+       curl_setopt($ch, CURLOPT_POSTFIELDS, $post_fields);
+       curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
+       $result = curl_exec($ch);
+       curl_close($ch);
+       return json_decode($result);
+   }
 
 			function calcoloTDEE($obiettivo, $TDEE){
 				if($obiettivo == 1){

@@ -1,6 +1,6 @@
 function main() {
   var jsonFile;
-  fetch("../json/chiamataAPI.json").then(res => res.json())
+  fetch("../json/chiamataDieta.json").then(res => res.json())
   .then(data => jsonFile = data)
   .then(() => parser(jsonFile));
 
