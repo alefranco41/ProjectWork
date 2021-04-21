@@ -1,54 +1,92 @@
 <?php
   include('../FunzioniPHP/Funzioni.php');
   session_start();
+
+  $msg = "";
+  $errori = Array(
+    "Sesso" => " ",
+    "Peso" => " ",
+    "Altezza" => " ",
+    "Eta" => " ",
+    "MassaGrassa" => " ",
+    "Allenamento" => " ",
+    "Cardio" => " ",
+    "GiorniCardio" => " ",
+    "Pesi" => " ",
+    "GiorniPesi" => " ",
+    "lavoro" => " "
+  );
+
+  $selected = Array(
+    "hb" => " ",
+    "rhb" => " ",
+    "msj" => " ",
+    "km" => " ",
+    "s" => " ",
+  );
+
   if (array_key_exists("invia", $_POST)) {
-    $errori = array();
+    if(array_key_exists("formule", $_POST)){
+      if($_POST["formule"] == "hb"){
+        $selected["hb"] = "selected = 'selected'";
+      }else if($_POST["formule"] == "rhb"){
+        $selected["rhb"] = "selected = 'selected'";
+      }else if($_POST["formule"] == "msj"){
+        $selected["msj"] = "selected = 'selected'";
+      }else if($_POST["formule"] == "km"){
+        $selected["km"] = "selected = 'selected'";
+      }else if($_POST["formule"] == "s"){
+        $selected["s"] = "selected = 'selected'";
+      }
+    }
+
+
     if (!array_key_exists('Sesso', $_POST) && ($_POST["formule"] != "km")) {
-      array_push($errori, "Sesso");
+      $errori["Sesso"] = "is-danger";
     }
     if(!array_key_exists('Peso', $_POST) || (!is_numeric($_POST["Peso"]) || (($_POST["Peso"]<1) || ($_POST["Peso"]>635)))){
-      array_push($errori, "Peso");
+      $errori["Peso"] = "is-danger";
     }
     if(array_key_exists("Altezza", $_POST)){
       if(((($_POST["formule"] != "km") && ($_POST["formule"] != "s")) && (!is_numeric($_POST["Altezza"]) || $_POST["Altezza"] < 50 || $_POST["Altezza"] > 251))){
-        array_push($errori, "Altezza");
+      $errori["Altezza"] = "is-danger";
       }
     }
 
     if(array_key_exists("Eta", $_POST)){
       if((($_POST["formule"] != "km") && (!is_numeric($_POST["Eta"]) || $_POST["Eta"] < 0 || $_POST["Eta"] > 118))){
-        array_push($errori, "Eta");
+        $errori["Eta"] = "is-danger";
       }
     }
 
     if(($_POST["formule"] == "km") && (!is_numeric($_POST["MassaGrassa"]) || $_POST["MassaGrassa"] < 2 || $_POST["MassaGrassa"] > 80)){
-      array_push($errori, "MassaGrassa");
+      $errori["MassaGrassa"] = "is-danger";
     }
     if (!array_key_exists('Allenamento', $_POST)) {
-    array_push($errori, "Allenamento");
+    $errori["Allenamento"] = "is-danger";
     }
 
     if (!array_key_exists('Cardio', $_POST) && array_key_exists('Allenamento', $_POST) && $_POST["Allenamento"] == "si"){
-        array_push($errori, "Cardio");
+        $errori["Cardio"] = "is-danger";
     }
 
     if (array_key_exists('Cardio', $_POST) && array_key_exists('Allenamento', $_POST) && $_POST["Cardio"] == "si" && $_POST["Allenamento"] == "si"){
       if(!is_numeric($_POST["GiorniCardio"]) || $_POST["GiorniCardio"] < 0 || $_POST["GiorniCardio"] > 7){
-        array_push($errori, "GiorniCardio");
+        $errori["GiorniCardio"] = "is-danger";
       }
     }
 
     if (!array_key_exists('Pesi', $_POST) && array_key_exists('Allenamento', $_POST) && $_POST["Allenamento"] == "si"){
-        array_push($errori, "Pesi");
+        $errori["Pesi"] = "is-danger";
     }
 
     if (array_key_exists('Pesi', $_POST) && array_key_exists('Allenamento', $_POST) && $_POST["Pesi"] == "si" && $_POST["Allenamento"] == "si"){
       if(!is_numeric($_POST["GiorniPesi"]) || $_POST["GiorniPesi"] < 0 || $_POST["GiorniPesi"] > 7){
-        array_push($errori, "GiorniPesi");
+        $errori["GiorniPesi"] = "is-danger";
       }
     }
     if(!array_key_exists('lavoro', $_POST) || $_POST["lavoro"] == "default"){
-      array_push($errori, "lavoro");
+      $errori["Lavoro"] = "is-danger";
     }
 
 
@@ -60,20 +98,16 @@
         eseguiquery($sql);
       }
       header('Location: risultato.php');
-    }else{
-      $errori = implode(",",$errori);
     }
 
 	}else{
     if(isset($_SESSION['username'])){
-      $errori = "Benvenuto {$_SESSION['username']}, inserisci i tuoi dati per scoprire il tuo TDEE";
+      $msg = "Benvenuto {$_SESSION['username']}, inserisci i tuoi dati per scoprire il tuo TDEE";
     }else{
-      $errori = "Benvenuto utente, inserisci i tuoi dati per scoprire il tuo TDEE";
+      $msg = "Benvenuto utente, inserisci i tuoi dati per scoprire il tuo TDEE";
     }
 
   }
-
-
 
 
 
@@ -81,10 +115,6 @@ $html = "<!DOCTYPE html>
   <html lang='en' dir='ltr'>
 
   <head>
-
-
-
-
     <meta charset='utf-8'>
     <title>ProjectWork</title>
     <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css' integrity='sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm' crossorigin='anonymous'>
@@ -95,6 +125,7 @@ $html = "<!DOCTYPE html>
   </head>
 
   <body>
+
 
 
   <nav class='level'>
@@ -114,21 +145,17 @@ $html = "<!DOCTYPE html>
       <a class='link is-info'>Contact</a>
     </p>
   </nav>
-      <div id='errori' class='has-text-weight-bold'>
-
-      </div>
       <form method='POST' action='tdee.php'>
         <div class='field'>
           <label class='label'>Formula</label>
             <div class='control'>
               <div class='select'>
                 <select id='formula' name='formule' onchange='controlloFormula(this.value);'>
-                  <option value='default' selected hidden>Seleziona</option>
-                  <option value='hb'>Harris-Benedict</option>
-                  <option value='rhb'>Harris-Benedict Revisionata</option>
-                  <option value='msj'>Mifflin-St Jeor</option>
-                  <option value='km'>Katch-McArdle</option>
-                  <option value='s'>Schofield</option>
+                  <option value='hb' {$selected['hb']}>Harris-Benedict</option>
+                  <option value='rhb' {$selected['rhb']}>Harris-Benedict Revisionata</option>
+                  <option value='msj' {$selected['msj']}>Mifflin-St Jeor</option>
+                  <option value='km' {$selected['km']}>Katch-McArdle</option>
+                  <option value='s' {$selected['s']}>Schofield</option>
                 </select>
               </div>
             </div>
@@ -139,7 +166,7 @@ $html = "<!DOCTYPE html>
           <div class='field'>
             <label class='label'>Sesso</label>
             <div class='control'>
-              <label class='radio'>
+              <label class='radio is-danger'>
                 <input type='radio' id='maschio' name='Sesso' value='m' disabled='disabled'>
                   Maschio
               </label>
@@ -151,15 +178,15 @@ $html = "<!DOCTYPE html>
             </div>
           </div>
 
-          <div class='field'><label class='label'>Peso</label><input type='text' class='input' name='Peso' id='Peso' placeholder='Inserisci il tuo peso' disabled='disabled'><br></div>
-          <div class='field'><label class='label'>Altezza</label><input type='text' class='input' name='Altezza' id='Altezza' placeholder='Inserisci la tua altezza' disabled='disabled'><br></div>
-          <div class='field'><label class='label'>Età</label><input type='text' class='input' name='Eta' id='Età' placeholder='Inserisci la tua età' disabled='disabled'><br></div>
-          <div class='field'><label class='label'>Massa Grassa</label><input type='text' class='input' name='MassaGrassa' id='MassaGrassa' placeholder='Inserisci la tua percentuale di massa grassa' disabled='disabled'><br></div>
-          <div class='field'><label class='label'>Allenamento</label><input type='radio' id='si' name='Allenamento' value='si' disabled='disabled' onchange='controlloAllenamento()'> Si <input type='radio' id='no' name='Allenamento' value='no' disabled='disabled' onchange='controlloAllenamento()'> No<br></div>
-          <div class='field' id='nascosta'><label class='label'>Cardio</label>Cardio:<input type='radio' id='si' name='Cardio' value='si' disabled='disabled' onchange='controlloCardio()'> Si <input type='radio' id='no' name='Cardio' value='no' disabled='disabled' onchange='controlloCardio()'> No<br></div>
-          <div class='field' id='nascosta'><label class='label'>Giorni Cardio</label><input type='text' class='input' name='GiorniCardio' id='GiorniCardio' placeholder='Inserisci quanti giorni fai cardio' disabled='disabled'><br> </div>
-          <div class='field' id='nascosta'><label class='label'>Pesi</label><input type='radio' id='si' name='Pesi' value='si' disabled='disabled' onchange='controlloPesi()'> Si <input type='radio' id='no' name='Pesi' value='no' disabled='disabled' onchange='controlloPesi()'> No<br></div>
-          <div class='field' ><label class='label'>Giorni Pesi</label><input type='text' class='input' name='GiorniPesi' id='GiorniPesi' placeholder='Inserisci quanti giorni fai pesi' disabled='disabled'><br> </div>
+          <div class='field'><label class='label'>Peso</label><input type='text' class='input {$errori['Peso']}' name='Peso' id='Peso' placeholder='Inserisci il tuo peso' disabled='disabled'><br></div>
+          <div class='field'><label class='label'>Altezza</label><input type='text' class='input {$errori['Altezza']}' name='Altezza' id='Altezza' placeholder='Inserisci la tua altezza' disabled='disabled'><br></div>
+          <div class='field'><label class='label'>Età</label><input type='text' class='input {$errori['Eta']}' name='Eta' id='Età' placeholder='Inserisci la tua età' disabled='disabled'><br></div>
+          <div class='field'><label class='label'>Massa Grassa</label><input type='text' class='input {$errori['MassaGrassa']}' name='MassaGrassa' id='MassaGrassa' placeholder='Inserisci la tua percentuale di massa grassa' disabled='disabled'><br></div>
+          <div class='field'><label class='label'>Allenamento</label><input type='radio'  id='si' name='Allenamento' value='si' disabled='disabled' onchange='controlloAllenamento()'> Si <input type='radio' id='no' name='Allenamento' value='no' disabled='disabled' onchange='controlloAllenamento()'> No<br></div>
+          <div class='field' id='nascosta'><label class='label'>Cardio</label>Cardio:<input type='radio'  id='si' name='Cardio' value='si' disabled='disabled' onchange='controlloCardio()'> Si <input type='radio'  id='no' name='Cardio' value='no' disabled='disabled' onchange='controlloCardio()'> No<br></div>
+          <div class='field' id='nascosta'><label class='label'>Giorni Cardio</label><input type='text' class='input {$errori['GiorniCardio']}' name='GiorniCardio' id='GiorniCardio' placeholder='Inserisci quanti giorni fai cardio' disabled='disabled'><br> </div>
+          <div class='field' id='nascosta'><label class='label'>Pesi</label><input type='radio'  id='si' name='Pesi' value='si' disabled='disabled' onchange='controlloPesi()'> Si <input type='radio'  id='no' name='Pesi' value='no' disabled='disabled' onchange='controlloPesi()'> No<br></div>
+          <div class='field' ><label class='label'>Giorni Pesi</label><input type='text' class='input {$errori['GiorniPesi']}' name='GiorniPesi' id='GiorniPesi' placeholder='Inserisci quanti giorni fai pesi' disabled='disabled'><br> </div>
 
 
           <div class='field'>
@@ -177,7 +204,7 @@ $html = "<!DOCTYPE html>
               </div>
             </div>
 
-          <input type='hidden' id='TDEE' name='TDEE' value='$errori'>
+          <input type='hidden' id='TDEE' name='TDEE' value=''>
 
           <div class='control'>
             <button class='button is-primary' onclick='bmr()' name='invia'>Invia</button>
@@ -188,6 +215,7 @@ $html = "<!DOCTYPE html>
   </body>
   </html>
 ";
+
 
 print($html);
 

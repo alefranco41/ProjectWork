@@ -46,7 +46,6 @@ if($TDEE != 0){
         $query.= "&app_id={$APIkey[$randomAPI][0]}&app_key={$APIkey[$randomAPI][1]}";
         array_push($nodes, $query);
 
-
       }
     }
 

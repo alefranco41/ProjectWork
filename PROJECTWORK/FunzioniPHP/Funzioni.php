@@ -71,10 +71,6 @@ error_reporting(E_ALL);
 
 		function chiamataDieta($nodes)
 			{
-
-				$headers = ['Accept-Encoding: gzip'];
-
-
 				$node_count = count($nodes);
 				$apiResultArray = array();
 				$curl_arr = array();
@@ -84,7 +80,6 @@ error_reporting(E_ALL);
 			    $url =$nodes[$i];
 			    $curl_arr[$i] = curl_init($url);
 					curl_setopt($curl_arr[$i], CURLOPT_RETURNTRANSFER, true);
-					curl_setopt($curl_arr[$i], CURLOPT_HTTPHEADER, $headers);
 					curl_setopt($curl_arr[$i], CURLOPT_ENCODING , "gzip");
 					curl_setopt($curl_arr[$i], CURLOPT_SSL_VERIFYPEER, false);
 

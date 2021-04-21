@@ -94,7 +94,7 @@ function controlloPesi() {
 
 function valoriDefault() {
   for(var i=0; i<spanArray.length; i++){
-    if(i<6) {
+    if(i<1) {
       visualizza([i]);
     }
   }
