@@ -11,9 +11,6 @@ var f = "";
 var arrayMoltiplicatori = [1.2,1.235,1.27,1.305,1.34,1.375,1.41,1.445,1.48,1.515,1.55,1.585,1.62,1.655,1.69,1.725,1.76,1.795,1.83,1.9];
 
 function bmr() {
-
-  css();
-
   var radios = document.getElementsByName('Sesso');
   for (var i=0; i<radios.length; i++) {
     if (radios[i].checked) {
@@ -44,17 +41,21 @@ function bmr() {
 
 function controlloFormula(formula) {
   f = formula;
+  console.log(spanArray.length);
   valoriDefault();
   if(formula == "km"){
     nascondi([1,3,4,10]);
+    visualizza([0,2,5,11]);
     rimuoviDisabled([2,5,6,7]);
     aggiungiDisabled([0,1,3,4,8,9,10,11,12,13]);
   }else if(formula == "s"){
     nascondi([3,5,10]);
+    visualizza([0,1,2,4,11]);
     rimuoviDisabled([0,1,2,4,6,7]);
     aggiungiDisabled([3,5,8,9,10,11,12,13]);
   }else if(formula == "hb" || formula == "rhb" || formula == "msj"){
     nascondi([5,10]);
+    visualizza([0,1,2,3,4,11]);
     rimuoviDisabled([0,1,2,3,4,6,7]);
     aggiungiDisabled([5,8,9,10,11,12,13]);
   }
@@ -185,24 +186,7 @@ function aggiungiDisabled(d){
   }
 }
 
-function css(){
-  var errori = document.getElementById('TDEE').value;
-  var arrErrori = errori.split(',');
-  for (var i=0; i<arrErrori.length; i++) {
-    var elemento = document.getElementsByName(arrErrori[i]);
-    var length = elemento.length;
-    for (var j=0; j<length; j++) {
-      if(elemento[j].type == "radio"){
-        elemento[j].style.outline = "1px solid red";
-      }else{
-        elemento[j].style.border = "1px solid red";
-      }
 
-    }
-  }
-
-
-}
 
 function calcoloTDEE(metabolismoBasale) {
   var livelloSportivo = null;
