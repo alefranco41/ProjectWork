@@ -1,17 +1,18 @@
-function main() {
+function main(flag) {
   var jsonFile;
   fetch("../json/chiamataDieta.json").then(res => res.json())
   .then(data => jsonFile = data)
-  .then(() => parser(jsonFile));
+  .then(() => parser(jsonFile, flag));
 
 }
 
-function parser(jsonFile) {
+function parser(jsonFile, flag) {
 
   var obj = [];
   var titoli = [];
   var arrayCalorie = [];
   var arrayFoto = [];
+
 
   for (var i=0; i<jsonFile.length; i++) {
     obj.push(JSON.parse(jsonFile[i]));
@@ -38,18 +39,23 @@ function parser(jsonFile) {
     arrayFoto.push(foto);
   }
 
-  compilaTabella(titoli, arrayCalorie, arrayFoto);
+  compilaTabella(titoli, arrayCalorie, arrayFoto, flag);
 }
 
-function compilaTabella(t,c,f){
+function compilaTabella(t,c,f, flag){
   var arrayCaselle = document.getElementsByClassName("pasto");
   if(arrayCaselle.length == t.length){
     for(var i=0; i<arrayCaselle.length; i++){
+      console.log(arrayCaselle[i]);
       arrayCaselle[i].innerHTML = "<span class = 'testo'> Ricetta: " + t[i] + "<br>" + "Calorie: " + Math.round(c[i]) + "<br>" + "<img src='" + f[i] + "'></img></span>";
+      arrayCaselle[i].className = "hacaricato";
+
     }
   }else{
-    for(var i=0; i<arrayCaselle.length; i++){
-      arrayCaselle[i].innerHTML = "la ricerca non ha prodotto risultati";
+    if(flag == 1){
+      for(var i=0; i<arrayCaselle.length; i++){
+        arrayCaselle[i].innerHTML = "la ricerca non ha prodotto risultati";
+      }
     }
   }
 }

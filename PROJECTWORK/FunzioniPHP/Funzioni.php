@@ -152,6 +152,41 @@ error_reporting(E_ALL);
        return json_decode($result);
    }
 
+	 function caricaTabella($righe, $giorni, $colonne){
+		 $tabella = "<div class='table-wrapper'><table id='tabellaPasti' class='fl-table'>";
+     for ($i=0; $i<$righe; $i++) {
+       if($i == 0){
+         $tabella .= "<thead><tr>";
+         $tabella .= "<th>Giorno</th>";
+         for($k=0; $k<count($giorni); $k++){
+           $tabella .= "<th>{$giorni[$k]}</th>";
+         }
+         $tabella .= "</tr></thead>";
+       }
+       for($j=0; $j<$colonne; $j++){
+         if($j == 0){
+           $npasto = $i + 1;
+           $tabella .= "<th class='contGiorni'>pasto $npasto </th>";
+         }else{
+           $tabella .= "<td class='pasto'></div></td>";
+         }
+       }
+       $tabella .= "</tr>";
+
+       if($i == ($righe-1)){
+         $tabella .= "<tfoot><tr>";
+         $tabella .= "<td>Totale</td>";
+         for($k=0; $k<count($giorni); $k++){
+           $tabella .= "<td>Totale {$giorni[$k]}</td>";
+         }
+         $tabella .= "</tr></tfoot>";
+       }
+     }
+     $tabella .= "</table></div>";
+
+		 return $tabella;
+	 }
+
 			function calcoloTDEE($obiettivo, $TDEE){
 				if($obiettivo == 1){
 					return $TDEE;

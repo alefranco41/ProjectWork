@@ -12,13 +12,23 @@ $giorni = [
 ];
 
 
+
+
 $id = $_SESSION["username"];
 $pass = $_SESSION["password"];
 $sql = "SELECT * FROM utente WHERE username = '$id' AND password = '$pass'";
 $righe = eseguiquery($sql);
 $TDEE = $righe[0]["TDEE"];
 if($TDEE != 0){
+
+  $righe = 5;
+  $colonne = 8;
+  $tabella = caricaTabella($righe, $giorni, $colonne);
+
+  $flag = 0;
   if(array_key_exists("invia", $_POST)){
+    $flag = 1;
+    $righe = $_POST["pasti"];
     $obiettivo = $_POST["obiettivo"];
     echo $TDEE;
     $TDEE = calcoloTDEE($obiettivo, $TDEE);
@@ -48,54 +58,13 @@ if($TDEE != 0){
 
       }
     }
-
-
-
-
+    $tabella = caricaTabella($righe, $giorni, $colonne);
     $output = chiamataDieta($nodes);
     $length = count($output);
     $output = json_encode($output);
     $jsonFile = "../json/chiamataDieta.json";
     file_put_contents($jsonFile, $output);
-
-
-
-
-     $righe = $_POST["pasti"];
-     $colonne = 8;
-
-     $tabella = "<div class='table-wrapper'><table id='tabellaPasti' class='fl-table'>";
-     for ($i=0; $i<$righe; $i++) {
-       if($i == 0){
-         $tabella .= "<thead><tr>";
-         $tabella .= "<th>Giorno</th>";
-         for($k=0; $k<count($giorni); $k++){
-           $tabella .= "<th>{$giorni[$k]}</th>";
-         }
-         $tabella .= "</tr></thead>";
-       }
-       for($j=0; $j<$colonne; $j++){
-         if($j == 0){
-           $npasto = $i + 1;
-           $tabella .= "<th class='contGiorni'>pasto $npasto </th>";
-         }else{
-           $tabella .= "<td class='pasto'></td>";
-         }
-       }
-       $tabella .= "</tr>";
-
-       if($i == ($righe-1)){
-         $tabella .= "<tfoot><tr>";
-         $tabella .= "<td>Totale</td>";
-         for($k=0; $k<count($giorni); $k++){
-           $tabella .= "<td>Totale {$giorni[$k]}</td>";
-         }
-         $tabella .= "</tr></tfoot>";
-       }
-     }
-     $tabella .= "</table></div>";
   }else{
-    $tabella = "";
     $length = 0;
   }
 }else{
@@ -115,7 +84,7 @@ $html = "<!DOCTYPE html>
     <link rel='stylesheet' href='../css/dieta.css'>
   </head>
 
-  <body onload='main()'>
+  <body onload='main({$flag})'>
   <a href='paginaUtente.php'>Torna alla home</a>
   <form method='POST' action='dieta.php'>
     <input type='hidden' name='jsonarray' value='$length' id='hidden'>
