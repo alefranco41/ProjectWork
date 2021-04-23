@@ -24,6 +24,28 @@ include('../FunzioniPHP/Funzioni.php');
     <body>
     <a href='paginaUtente.php'>Torna alla home</a>
     <form method='POST' action='allenamento.php' '>
+      Giorni allenamento alla settimana:
+        <input type='checkbox' name='allenamento' value='lunedi'>Lunedì
+        <input type='checkbox' name='allenamento' value='martedi'>Martedì
+        <input type='checkbox' name='allenamento' value='mercoledi'>Mercoledì
+        <input type='checkbox' name='allenamento' value='giovedi'>Giovedì
+        <input type='checkbox' name='allenamento' value='venerdi'>Venerdì
+        <input type='checkbox' name='allenamento' value='sabato'>Sabato
+        <input type='checkbox' name='allenamento' value='domenica'>Domenica<br>
+
+      Tipo allenamento:
+        <input type='radio' name='tipo' value='mono'>Monofrequenza
+        <input type='radio' name='tipo' value 'multi'>Multifrequenza<br>
+
+      Cardio:
+        <input type='radio' name='cardio' value='si'>SI
+        <input type='radio' name='cardio' value='no'>NO<br>
+
+      Attrezzatura:
+        <input type='radio' name='attrezzatura' value='free'>Pesi/Bilancieri/Manubri
+        <input type='radio' name='attrezzatura' value='macchine'>Accesso a palestra
+        <input type='radio' name='attrezzatura' value='corpolibero'>Corpo Libero<br>
+
       <input type='button' name='invia' onclick='main()' value='invia'>
     </form>
 
