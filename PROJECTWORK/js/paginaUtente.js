@@ -43,19 +43,29 @@ function parser(jsonFile, flag) {
 }
 
 function compilaTabella(t,c,f, flag){
-  var arrayCaselle = document.getElementsByClassName("pasto");
+  var sheet = getStyleSheet("http://localhost/projectwork/PROJECTWORK/css/dieta.css");
+  var arrayCaselle = document.querySelectorAll("tbody td");
+
   if(arrayCaselle.length == t.length){
     for(var i=0; i<arrayCaselle.length; i++){
-      console.log(arrayCaselle[i]);
-      arrayCaselle[i].innerHTML = "<span class = 'testo'> Ricetta: " + t[i] + "<br>" + "Calorie: " + Math.round(c[i]) + "<br>" + "<img src='" + f[i] + "'></img></span>";
+      console.log(sheet);
       arrayCaselle[i].className = "hacaricato";
-
+      arrayCaselle[i].innerHTML = "<span class = 'testo'> Ricetta: " + t[i] + "<br>" + "Calorie: " + Math.round(c[i]) + "<br>" + "<img src='" + f[i] + "'></img></span>";
     }
   }else{
     if(flag == 1){
       for(var i=0; i<arrayCaselle.length; i++){
         arrayCaselle[i].innerHTML = "la ricerca non ha prodotto risultati";
       }
+    }
+  }
+}
+
+function getStyleSheet(unique_title) {
+  for(var i=0; i<document.styleSheets.length; i++) {
+    var sheet = document.styleSheets[i];
+    if(sheet.href == unique_title) {
+      return sheet;
     }
   }
 }

@@ -5,7 +5,6 @@ require_once '../mail/class.smtp.php';
 
 
 
-$global_get_params = ["exercisename"=>"burpee"];
 $global_auth_link = "http://204.235.60.194/consumer/login";
 $user_agent = "Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8.1.13) Gecko/20080311 Firefox/2.0.0.13";
 
@@ -100,7 +99,7 @@ error_reporting(E_ALL);
 			}
 
 
-			function jwt_request($token, $get, $nodes) {
+			function jwt_request($token, $nodes) {
 					$node_count = count($nodes);
 					$apiResultArray = array();
 					$curl_arr = array();
@@ -109,7 +108,7 @@ error_reporting(E_ALL);
 
 					for($i = 0; $i < $node_count; $i++){
 						$url =$nodes[$i];
-						$ch[$i] = curl_init($url . "?" . http_build_query($get)); // Initialise cURL
+						$ch[$i] = curl_init($url); // Initialise cURL
 		        $data_type = "Content-type: application/json";
 		        $authorization = "Authorization: Bearer $token"; // Prepare the authorisation token
 		        curl_setopt($ch[$i], CURLOPT_USERAGENT, $user_agent); // Fusio requires
@@ -152,7 +151,41 @@ error_reporting(E_ALL);
        return json_decode($result);
    }
 
-	 function caricaTabella($righe, $giorni, $colonne){
+	 function queryAllenamento($attrezzatura){
+		 $gruppoMuscolare = array(
+ 			0 => "Chest",
+			1 => "back",
+			2 => "Thigh",
+			3 => "deltoid",
+			4 => "triceps",
+			5 => "biceps",
+			6 => "Abdominis"
+
+ 		);
+
+		if($attrezzatura == "palestra"){
+			$attrezzatura = "Jump%20Rope,Dumbbell,Lever,Bodyweight,Medicine%20Ball,Stretch,Barbell,Lever%20(plate%20loaded),Cable,Sled,Weighted,Lever%20(selectorized),Isometric,Kettlebell,Rope,Self-assisted,%20Machine-assisted,Partner-assisted,Smith,Cardio%20Machine,PNF%20Stretch,Machine%20Stretch,Suspended,Special%20Barbell,Band%20Resistive,Band-assisted";
+
+		}else if($attrezzatura == "pesi"){
+			$attrezzatura = "Dumbbell,Bodyweight,Barbell";
+		}else if($attrezzatura	== "niente"){
+			$attrezzatura = "Bodyweight";
+		}
+		 $nodes = array();
+		 for($i=0; $i<count($gruppoMuscolare); $i++){
+			 if($i == 2){
+				 $query = "http://204.235.60.194/exrxapi/v1/allinclusive/exercises?bodypart={$gruppoMuscolare[$i]}&apparatus=[$attrezzatura]";
+
+			 }else{
+				 $query = "http://204.235.60.194/exrxapi/v1/allinclusive/exercises?musclegroup={$gruppoMuscolare[$i]}&apparatus=[$attrezzatura]";
+			 }
+			 array_push($nodes, $query);
+		 }
+
+		 return $nodes;
+	 }
+
+	 function caricaTabella($righe, $giorni, $colonne, $muscoli){
 		 $tabella = "<div class='table-wrapper'><table id='tabellaPasti' class='fl-table'>";
      for ($i=0; $i<$righe; $i++) {
        if($i == 0){
@@ -164,12 +197,20 @@ error_reporting(E_ALL);
          $tabella .= "</tr></thead>";
        }
        for($j=0; $j<$colonne; $j++){
-         if($j == 0){
-           $npasto = $i + 1;
-           $tabella .= "<th class='contGiorni'>pasto $npasto </th>";
-         }else{
-           $tabella .= "<td class='pasto'></div></td>";
-         }
+         if($muscoli == ""){
+					 if($j == 0){
+	           $npasto = $i + 1;
+	           $tabella .= "<th class='contGiorni'>pasto $npasto </th>";
+	         }else{
+	           $tabella .= "<td></div></td>";
+	         }
+				 }else{
+					 if($j == 0){
+	           $tabella .= "<th class='contGiorni'>{$muscoli[$i]}</th>";
+	         }else{
+	           $tabella .= "<td></div></td>";
+	         }
+				 }
        }
        $tabella .= "</tr>";
 
