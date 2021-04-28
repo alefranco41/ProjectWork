@@ -12,6 +12,7 @@ function parser(jsonFile, flag) {
   var titoli = [];
   var arrayCalorie = [];
   var arrayFoto = [];
+  var arrayUrl = [];
 
 
   for (var i=0; i<jsonFile.length; i++) {
@@ -19,7 +20,6 @@ function parser(jsonFile, flag) {
   }
 
   for (var i=0; i<obj.length; i++) {
-    console.log(obj[i]);
     if(obj[i]["count"] == 0){
         break;
     }else if(obj[i]["count"] >= 100){
@@ -29,6 +29,7 @@ function parser(jsonFile, flag) {
     }
     var ricettaRandom = Math.floor(Math.random() * max);
 
+    console.log(obj[i]["hits"][ricettaRandom]);
 
 
     var titolo = obj[i]["hits"][ricettaRandom]["recipe"]["label"];
@@ -37,12 +38,14 @@ function parser(jsonFile, flag) {
     arrayCalorie.push(calorie);
     var foto = obj[i]["hits"][ricettaRandom]["recipe"]["image"];
     arrayFoto.push(foto);
+    var Url = obj[i]["hits"][ricettaRandom]["recipe"]["url"];
+    arrayUrl.push(Url);
   }
 
-  compilaTabella(titoli, arrayCalorie, arrayFoto, flag);
+  compilaTabella(titoli, arrayCalorie, arrayFoto, arrayUrl,flag);
 }
 
-function compilaTabella(t,c,f, flag){
+function compilaTabella(t,c,f,u, flag){
   var sheet = getStyleSheet("http://localhost/projectwork/PROJECTWORK/css/dieta.css");
   var arrayCaselle = document.querySelectorAll("tbody td");
 
@@ -50,7 +53,7 @@ function compilaTabella(t,c,f, flag){
     for(var i=0; i<arrayCaselle.length; i++){
       console.log(sheet);
       arrayCaselle[i].className = "hacaricato";
-      arrayCaselle[i].innerHTML = "<span class = 'testo'> Ricetta: " + t[i] + "<br>" + "Calorie: " + Math.round(c[i]) + "<br>" + "<img src='" + f[i] + "'></img></span>";
+      arrayCaselle[i].innerHTML = "<span class = 'testo'>" +"<a href='" + u[i]+ "'>" + "Ricetta: " + t[i] + "<br>" + "Calorie: " + Math.round(c[i]) + "<br>" + "<img src='" + f[i] + "'></img></a></span>";
     }
   }else{
     if(flag == 1){
