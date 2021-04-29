@@ -54,6 +54,10 @@ if($TDEE != 0){
         $query.= "$tipodieta";
         $query.= "&calories={$fromCalories}-{$toCalories}";
         $query.= "&app_id={$APIkey[$randomAPI][0]}&app_key={$APIkey[$randomAPI][1]}";
+        $query.= "&=imageSize=THUMBNAIL";
+        $query.= "&health=alcohol-free";
+        $query.= "&excluded=jam";
+
         array_push($nodes, $query);
 
       }

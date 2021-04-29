@@ -34,8 +34,6 @@ session_start();
       $authed = jwt_auth_for_token("alessandrofexrx", "Ckptn63w");
       $authed = (array) $authed;
       $token = $authed["token"];
-
-
       $nodes = queryAllenamento($_POST["attrezzatura"]);
 
 
