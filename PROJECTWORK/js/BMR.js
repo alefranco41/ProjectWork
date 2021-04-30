@@ -11,6 +11,7 @@ var f = "";
 var arrayMoltiplicatori = [1.2,1.235,1.27,1.305,1.34,1.375,1.41,1.445,1.48,1.515,1.55,1.585,1.62,1.655,1.69,1.725,1.76,1.795,1.83,1.9];
 
 function bmr() {
+  controlloFormula(f);
   var radios = document.getElementsByName('Sesso');
   for (var i=0; i<radios.length; i++) {
     if (radios[i].checked) {
@@ -34,6 +35,7 @@ function bmr() {
   }
 
 
+
  calcoloTDEE(metabolismoBasale);
 
 }
@@ -41,7 +43,6 @@ function bmr() {
 
 function controlloFormula(formula) {
   f = formula;
-  console.log(spanArray.length);
   valoriDefault();
   if(formula == "km"){
     nascondi([1,3,4,10]);
@@ -99,6 +100,21 @@ function valoriDefault() {
       visualizza([i]);
     }
   }
+}
+
+function classiDefault(){
+  for(var i=0; i<inputArray.length; i++){
+    if(inputArray[i].className != "input"){
+      if(inputArray[i].type != "radio"){
+        inputArray[i].className = "input";
+      }
+  }
+}
+var radio = document.getElementsByClassName('radioso');
+for(var j=0; j<radio.length; j++){
+  radio[j].style = "color: black";
+}
+document.getElementById('lavoro').className = "input";
 }
 
 function hb(sesso, peso, altezza, eta) {
@@ -211,6 +227,7 @@ function calcoloTDEE(metabolismoBasale) {
   var indexMoltiplicatore = ((livelloSportivo * attivita)-1);
   var moltiplicatore = arrayMoltiplicatori[indexMoltiplicatore];
   var TDEE = metabolismoBasale * moltiplicatore;
+
 
   document.getElementById('TDEE').value = TDEE;
 }

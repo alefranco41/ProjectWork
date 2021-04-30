@@ -4467,7 +4467,7 @@ function initSidebar() {
     openedMenu: "",
     openSidebarMenu: function openSidebarMenu(e) {
       var target = e.target.getAttribute("data-menu");
-
+      console.log(e);
       if (this.openedMenu === target) {
         this.openedMenu = "";
       } else {
