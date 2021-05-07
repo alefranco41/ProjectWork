@@ -105,8 +105,7 @@
     }
 
 
-    if($_POST["MassaGrassa"] == "km"){
-      if(!is_numeric($_POST["MassaGrassa"]) || $_POST["MassaGrassa"] < 2 || $_POST["MassaGrassa"] > 80 || !array_key_exists("MassaGrassa", $_POST)){
+      if(!is_numeric($_POST["MassaGrassa"]) || $_POST["MassaGrassa"] < 2 || $_POST["MassaGrassa"]){
         $errori["MassaGrassa"] = "is-danger";
         $MassaGrassa = "";
       }else{
@@ -115,12 +114,6 @@
           $MassaGrassa = $_POST["MassaGrassa"];
         }
       }
-    }else{
-      $errori["MassaGrassa"] = " ";
-      if(array_key_exists('MassaGrassa', $_POST)){
-        $MassaGrassa = $_POST["MassaGrassa"];
-      }
-    }
 
     if (!array_key_exists('Allenamento', $_POST)) {
     $errori["Allenamento"] = "style='color: #f14668';";
