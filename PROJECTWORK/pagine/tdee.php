@@ -11,7 +11,23 @@
       "s" => " ",
     );
 
+    $selezionato = Array(
+        "1" => " ",
+        "2" => " ",
+        "3" => " ",
+        "4" => " "
+      );
+
+
+
   if(array_key_exists("invia", $_POST)){
+    $Peso = "";
+    $Altezza = "";
+    $Eta = "";
+    $MassaGrassa = "";
+    $GiorniCardio = "";
+    $GiorniPesi = "";
+
     if(array_key_exists("formule", $_POST)){
       if($_POST["formule"] == "hb"){
         $selected["hb"] = "selected = 'selected'";
@@ -25,44 +41,87 @@
         $selected["s"] = "selected = 'selected'";
       }
     }
+    if(array_key_exists("lavoro", $_POST)){
+
+      if($_POST["lavoro"] == "1"){
+        $selezionato["1"] = "selected = 'selected'";
+      }else if($_POST["lavoro"] == "2"){
+        $selezionato["2"] = "selected = 'selected'";
+      }else if($_POST["lavoro"] == "3"){
+        $selezionato["3"] = "selected = 'selected'";
+      }else if($_POST["lavoro"] == "4"){
+        $selezionato["4"] = "selected = 'selected'";
+      }
+    }
 
     $_POST['formule'] = "'" . $_POST['formule'] . "'";
 
     if (!array_key_exists('Sesso', $_POST) && ($_POST["formule"] != "km")) {
-      $errori["Sesso"] = "style='color: #f14668';";
+    $errori["Sesso"] = "style='color: #f14668';";
     }else{
       $errori["Sesso"] = " ";
     }
     if(!array_key_exists('Peso', $_POST) || (!is_numeric($_POST["Peso"]) || (($_POST["Peso"]<1) || ($_POST["Peso"]>635)))){
       $errori["Peso"] = "is-danger";
+      $Peso = "";
     }else{
       $errori["Peso"] = " ";
+      if(array_key_exists('Peso', $_POST)){
+        $Peso = $_POST["Peso"];
+      }
     }
     if(array_key_exists("Altezza", $_POST)){
       if(((($_POST["formule"] != "km") && ($_POST["formule"] != "s")) && (!is_numeric($_POST["Altezza"]) || $_POST["Altezza"] < 50 || $_POST["Altezza"] > 251))){
       $errori["Altezza"] = "is-danger";
+      $Altezza = "";
     }else{
       $errori["Altezza"] = " ";
+      if(array_key_exists('Altezza', $_POST)){
+        $Altezza = $_POST["Altezza"];
+      }
     }
     }else{
       $errori["Altezza"] = " ";
+      if(array_key_exists('Altezza', $_POST)){
+        $Altezza = $_POST["Altezza"];
+      }
     }
 
     if(array_key_exists("Eta", $_POST)){
       if((($_POST["formule"] != "km") && (!is_numeric($_POST["Eta"]) || $_POST["Eta"] < 0 || $_POST["Eta"] > 118))){
         $errori["Eta"] = "is-danger";
+        $Eta = "";
       }else{
         $errori["Eta"] = " ";
+        if(array_key_exists('Eta', $_POST)){
+          $Eta = $_POST["Eta"];
+        }
       }
     }else{
       $errori["Eta"] = " ";
+      if(array_key_exists('Eta', $_POST)){
+        $Eta = $_POST["Eta"];
+      }
     }
 
-    if(($_POST["formule"] == "km") && (!is_numeric($_POST["MassaGrassa"]) || $_POST["MassaGrassa"] < 2 || $_POST["MassaGrassa"] > 80)){
-      $errori["MassaGrassa"] = "is-danger";
+
+    if($_POST["massaGrassa"] == "km"){
+      if(!is_numeric($_POST["MassaGrassa"]) || $_POST["MassaGrassa"] < 2 || $_POST["MassaGrassa"] > 80 || !array_key_exists("MassaGrassa", $_POST)){
+        $errori["MassaGrassa"] = "is-danger";
+        $MassaGrassa = "";
+      }else{
+        $errori["MassaGrassa"] = " ";
+        if(array_key_exists('MassaGrassa', $_POST)){
+          $MassaGrassa = $_POST["MassaGrassa"];
+        }
+      }
     }else{
       $errori["MassaGrassa"] = " ";
+      if(array_key_exists('MassaGrassa', $_POST)){
+        $MassaGrassa = $_POST["MassaGrassa"];
+      }
     }
+
     if (!array_key_exists('Allenamento', $_POST)) {
     $errori["Allenamento"] = "style='color: #f14668';";
   }else{
@@ -78,8 +137,13 @@
     if (array_key_exists('Cardio', $_POST) && array_key_exists('Allenamento', $_POST) && $_POST["Cardio"] == "si" && $_POST["Allenamento"] == "si"){
       if(!is_numeric($_POST["GiorniCardio"]) || $_POST["GiorniCardio"] < 0 || $_POST["GiorniCardio"] > 7){
         $errori["GiorniCardio"] = "is-danger";
+        $GiorniCardio = "";
       }else{
         $errori["GiorniCardio"] = " ";
+        if(array_key_exists('GiorniCardio', $_POST)){
+          $GiorniCardio = $_POST["GiorniCardio"];
+        }
+
       }
     }
 
@@ -92,15 +156,21 @@
     if (array_key_exists('Pesi', $_POST) && array_key_exists('Allenamento', $_POST) && $_POST["Pesi"] == "si" && $_POST["Allenamento"] == "si"){
       if(!is_numeric($_POST["GiorniPesi"]) || $_POST["GiorniPesi"] < 0 || $_POST["GiorniPesi"] > 7){
         $errori["GiorniPesi"] = "is-danger";
+        $GiorniPesi = "";
       }else{
         $errori["GiorniPesi"] = " ";
+        if(array_key_exists('GiorniPesi', $_POST)){
+          $GiorniPesi = $_POST["GiorniPesi"];
+        }
       }
     }
 
-    if(!array_key_exists('lavoro', $_POST) || $_POST["lavoro"] == "default"){
+    if(!array_key_exists('lavoro', $_POST)){
       $errori["Lavoro"] = "is-danger";
+      $Lavoro = "";
     }else{
       $errori["Lavoro"] = " ";
+      $Lavoro = $_POST["lavoro"];
     }
 
     $flag = 0;
@@ -339,26 +409,38 @@
                      <label class='label'>Sesso</label>
                      <div class='control' >
                        <label class='radio'>
-                         <input type='radio' id='maschio' name='Sesso' value='m' disabled='disabled'>
+                         <input type='radio' id='maschio' name='Sesso' value='m' disabled='disabled' <?php if (isset($_POST['Sesso']) && $_POST['Sesso'] == 'm') echo ' checked="checked"'; ?>>
                            Maschio
                        </label>
 
                        <label class='radio'>
-                         <input type='radio' id='femmina' name='Sesso' value='f' disabled='disabled'>
+                         <input type='radio' id='femmina' name='Sesso' value='f' disabled='disabled' <?php if (isset($_POST['Sesso']) && $_POST['Sesso'] == 'f') echo ' checked="checked"'; ?>>
                            Femmina
                        </label>
                      </div>
                    </div>
 
-                   <div class='field'><label class='label'>Peso</label><input type='text' class='input <?php echo $errori['Peso']; ?>' name='Peso' id='Peso' placeholder='Inserisci il tuo peso' disabled='disabled'><br></div>
-                   <div class='field'><label class='label'>Altezza</label><input type='text' class='input <?php echo $errori['Altezza']; ?>' name='Altezza' id='Altezza' placeholder='Inserisci la tua altezza' disabled='disabled'><br></div>
-                   <div class='field'><label class='label'>Età</label><input type='text' class='input <?php echo $errori['Eta']; ?>' name='Eta' id='Età' placeholder='Inserisci la tua età' disabled='disabled'><br></div>
-                   <div class='field'><label class='label'>Massa Grassa</label><input type='text' class='input <?php echo $errori['MassaGrassa']; ?>' name='MassaGrassa' id='MassaGrassa' placeholder='Inserisci la tua percentuale di massa grassa' disabled='disabled'><br></div>
-                   <div class='field radioso' <?php echo $errori['Allenamento']; ?>><label class='label'>Allenamento</label><input type='radio'  id='si' name='Allenamento' value='si' disabled='disabled' onchange='controlloAllenamento()'> Si <input type='radio' id='no' name='Allenamento' value='no' disabled='disabled' onchange='controlloAllenamento()'> No<br></div>
-                   <div class='field radioso' id='nascosta' <?php echo $errori['Cardio']; ?>><label class='label'>Cardio</label><input type='radio'  id='si' name='Cardio' value='si' disabled='disabled' onchange='controlloCardio()'> Si <input type='radio'  id='no' name='Cardio' value='no' disabled='disabled' onchange='controlloCardio()'> No<br></div>
-                   <div class='field' id='nascosta'><label class='label'>Giorni Cardio</label><input type='text' class='input <?php echo $errori['GiorniCardio']; ?>' name='GiorniCardio' id='GiorniCardio' placeholder='Inserisci quanti giorni fai cardio' disabled='disabled'><br> </div>
-                   <div class='field radioso' id='nascosta' <?php echo $errori['Pesi']; ?>><label class='label'>Pesi</label><input type='radio'  id='si' name='Pesi' value='si' disabled='disabled' onchange='controlloPesi()'> Si <input type='radio'  id='no' name='Pesi' value='no' disabled='disabled' onchange='controlloPesi()'> No<br></div>
-                   <div class='field' ><label class='label'>Giorni Pesi</label><input type='text' class='input <?php echo $errori['GiorniPesi']; ?>' name='GiorniPesi' id='GiorniPesi' placeholder='Inserisci quanti giorni fai pesi' disabled='disabled'><br> </div>
+                   <div class='field'><label class='label'>Peso</label><input type='text' class='input <?php echo $errori['Peso'];?>' value='<?PHP print $Peso; ?>'  name='Peso' id='Peso' placeholder='Inserisci il tuo peso' disabled='disabled'><br></div>
+                   <div class='field'><label class='label'>Altezza</label><input type='text' class='input <?php echo $errori['Altezza']; ?>' value='<?PHP print $Altezza; ?>' name='Altezza' id='Altezza' placeholder='Inserisci la tua altezza' disabled='disabled'><br></div>
+                   <div class='field'><label class='label'>Età</label><input type='text' class='input <?php echo $errori['Eta']; ?>' value='<?PHP print $Eta; ?>' name='Eta' id='Età' placeholder='Inserisci la tua età' disabled='disabled'><br></div>
+                   <div class='field'><label class='label'>Massa Grassa</label><input type='text' class='input <?php echo $errori['MassaGrassa']; ?>' value='<?PHP print $MassaGrassa; ?>' name='MassaGrassa' id='MassaGrassa' placeholder='Inserisci la tua percentuale di massa grassa' disabled='disabled'><br></div>
+                   <div class='field radioso' <?php echo $errori['Allenamento']; ?>>
+                      <label class='label'>Allenamento</label>
+                      <input type='radio'  id='si' name='Allenamento' value='si' disabled='disabled' onchange='controlloAllenamento()'> Si
+                      <input type='radio'  id='no' name='Allenamento' value='no' disabled='disabled' onchange='controlloAllenamento()'> No<br>
+                  </div>
+                   <div class='field radioso' id='nascosta' <?php echo $errori['Cardio']; ?>>
+                     <label class='label'>Cardio</label>
+                     <input type='radio'  id='si' name='Cardio' value='si' disabled='disabled' onchange='controlloCardio()'> Si
+                     <input type='radio'  id='no' name='Cardio' value='no' disabled='disabled' onchange='controlloCardio()'> No<br>
+                   </div>
+                   <div class='field' id='nascosta'><label class='label'>Giorni Cardio</label><input type='text' class='input <?php echo $errori['GiorniCardio']; ?>' value='<?PHP print $GiorniCardio; ?>' name='GiorniCardio' id='GiorniCardio' placeholder='Inserisci quanti giorni fai cardio' disabled='disabled'><br> </div>
+                   <div class='field radioso' id='nascosta' <?php echo $errori['Pesi']; ?>>
+                     <label class='label'>Pesi</label>
+                     <input type='radio'  id='si' name='Pesi' value='si' disabled='disabled' onchange='controlloPesi()'> Si
+                     <input type='radio'  id='no' name='Pesi' value='no' disabled='disabled' onchange='controlloPesi()'> No<br>
+                   </div>
+                   <div class='field' ><label class='label'>Giorni Pesi</label><input type='text' class='input <?php echo $errori['GiorniPesi']; ?>' value='<?PHP print $GiorniPesi; ?>' name='GiorniPesi' id='GiorniPesi' placeholder='Inserisci quanti giorni fai pesi' disabled='disabled'><br> </div>
 
 
                    <div class='field'>
@@ -366,11 +448,10 @@
                        <div class='control'>
                          <div class='select' >
                            <select class='input <?php echo $errori['Lavoro']; ?>' id='lavoro' name='lavoro' disabled='disabled'>
-                             <option value='default' selected hidden>Seleziona</option>
-                             <option value='1'>Sedentario</option>
-                             <option value='2'>Leggermente attivo</option>
-                             <option value='3'>Moderatamente attivo</option>
-                             <option value='4'>Estremamente attivo</option>
+                             <option value='1' <?php echo $selezionato["1"]; ?>>Sedentario</option>
+                             <option value='2' <?php echo $selezionato["2"]; ?>>Leggermente attivo</option>
+                             <option value='3' <?php echo $selezionato["3"]; ?>>Moderatamente attivo</option>
+                             <option value='4' <?php echo $selezionato["4"]; ?>>Estremamente attivo</option>
                            </select>
                          </div>
                        </div>
