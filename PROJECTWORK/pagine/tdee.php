@@ -18,15 +18,15 @@
         "4" => " "
       );
 
+      $Peso = "";
+      $Altezza = "";
+      $Eta = "";
+      $MassaGrassa = "";
+      $GiorniCardio = "";
+      $GiorniPesi = "";
 
 
   if(array_key_exists("invia", $_POST)){
-    $Peso = "";
-    $Altezza = "";
-    $Eta = "";
-    $MassaGrassa = "";
-    $GiorniCardio = "";
-    $GiorniPesi = "";
 
     if(array_key_exists("formule", $_POST)){
       if($_POST["formule"] == "hb"){
@@ -105,7 +105,7 @@
     }
 
 
-    if($_POST["massaGrassa"] == "km"){
+    if($_POST["MassaGrassa"] == "km"){
       if(!is_numeric($_POST["MassaGrassa"]) || $_POST["MassaGrassa"] < 2 || $_POST["MassaGrassa"] > 80 || !array_key_exists("MassaGrassa", $_POST)){
         $errori["MassaGrassa"] = "is-danger";
         $MassaGrassa = "";
