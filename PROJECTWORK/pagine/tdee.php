@@ -28,6 +28,7 @@
 
   if(array_key_exists("invia", $_POST)){
 
+
     if(array_key_exists("formule", $_POST)){
       if($_POST["formule"] == "hb"){
         $selected["hb"] = "selected = 'selected'";
@@ -104,8 +105,8 @@
       }
     }
 
-
-      if(!is_numeric($_POST["MassaGrassa"]) || $_POST["MassaGrassa"] < 2 || $_POST["MassaGrassa"]){
+    if(array_key_exists('MassaGrassa', $_POST)){
+      if(!is_numeric($_POST["MassaGrassa"]) || $_POST["MassaGrassa"] < 2 || $_POST["MassaGrassa"] > 60){
         $errori["MassaGrassa"] = "is-danger";
         $MassaGrassa = "";
       }else{
@@ -114,6 +115,8 @@
           $MassaGrassa = $_POST["MassaGrassa"];
         }
       }
+    }
+
 
     if (!array_key_exists('Allenamento', $_POST)) {
     $errori["Allenamento"] = "style='color: #f14668';";
@@ -181,6 +184,8 @@
       }
       header('Location: risultato.php');
     }
+
+    print_r($errori);
 
 	}else{
     $errori = Array(
