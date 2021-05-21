@@ -163,6 +163,8 @@ error_reporting(E_ALL);
 
  		);
 
+		echo $attrezzatura;
+
 		if($attrezzatura == "palestra"){
 			$attrezzatura = "Jump%20Rope,Dumbbell,Lever,Bodyweight,Medicine%20Ball,Stretch,Barbell,Lever%20(plate%20loaded),Cable,Sled,Weighted,Lever%20(selectorized),Isometric,Kettlebell,Rope,Self-assisted,%20Machine-assisted,Partner-assisted,Smith,Cardio%20Machine,PNF%20Stretch,Machine%20Stretch,Suspended,Special%20Barbell,Band%20Resistive,Band-assisted";
 
