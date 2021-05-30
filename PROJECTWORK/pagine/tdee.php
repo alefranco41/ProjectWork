@@ -4,18 +4,18 @@
   $msg = "";
 
   $selected = Array(
-      "hb" => " ",
-      "rhb" => " ",
-      "msj" => " ",
-      "km" => " ",
-      "s" => " ",
+      "hb" => "",
+      "rhb" => "",
+      "msj" => "",
+      "km" => "",
+      "s" => "",
     );
 
     $selezionato = Array(
-        "1" => " ",
-        "2" => " ",
-        "3" => " ",
-        "4" => " "
+        "1" => "",
+        "2" => "",
+        "3" => "",
+        "4" => ""
       );
 
       $Peso = "";
@@ -27,6 +27,7 @@
 
 
   if(array_key_exists("invia", $_POST)){
+
 
     if(array_key_exists("formule", $_POST)){
       if($_POST["formule"] == "hb"){
@@ -55,84 +56,96 @@
     }
 
     $_POST['formule'] = "'" . $_POST['formule'] . "'";
-
-    if (!array_key_exists('Sesso', $_POST) && ($_POST["formule"] != "km")) {
-    $errori["Sesso"] = "style='color: #f14668';";
+    if($_POST["formule"] == "'km'") {
+      $errori["Sesso"] = "";
     }else{
-      $errori["Sesso"] = " ";
+      if($_POST["formule"] != "'km'" && (!array_key_exists('Sesso', $_POST))){
+        $errori["Sesso"] = "style='color: #f14668';";
+      }
     }
     if(!array_key_exists('Peso', $_POST) || (!is_numeric($_POST["Peso"]) || (($_POST["Peso"]<1) || ($_POST["Peso"]>635)))){
       $errori["Peso"] = "is-danger";
       $Peso = "";
     }else{
-      $errori["Peso"] = " ";
+      $errori["Peso"] = "";
       if(array_key_exists('Peso', $_POST)){
         $Peso = $_POST["Peso"];
       }
     }
     if(array_key_exists("Altezza", $_POST)){
-      if(((($_POST["formule"] != "km") && ($_POST["formule"] != "s")) && (!is_numeric($_POST["Altezza"]) || $_POST["Altezza"] < 50 || $_POST["Altezza"] > 251))){
+      if(((($_POST["formule"] != "'km'") && ($_POST["formule"] != "'s'")) && (!is_numeric($_POST["Altezza"]) || $_POST["Altezza"] < 50 || $_POST["Altezza"] > 251))){
       $errori["Altezza"] = "is-danger";
       $Altezza = "";
     }else{
-      $errori["Altezza"] = " ";
+      $errori["Altezza"] = "";
       if(array_key_exists('Altezza', $_POST)){
         $Altezza = $_POST["Altezza"];
       }
     }
     }else{
-      $errori["Altezza"] = " ";
+      $errori["Altezza"] = "";
       if(array_key_exists('Altezza', $_POST)){
         $Altezza = $_POST["Altezza"];
       }
     }
 
     if(array_key_exists("Eta", $_POST)){
-      if((($_POST["formule"] != "km") && (!is_numeric($_POST["Eta"]) || $_POST["Eta"] < 0 || $_POST["Eta"] > 118))){
+      if((($_POST["formule"] != "'km'") && (!is_numeric($_POST["Eta"]) || $_POST["Eta"] < 0 || $_POST["Eta"] > 118))){
         $errori["Eta"] = "is-danger";
         $Eta = "";
       }else{
-        $errori["Eta"] = " ";
+        $errori["Eta"] = "";
         if(array_key_exists('Eta', $_POST)){
           $Eta = $_POST["Eta"];
         }
       }
     }else{
-      $errori["Eta"] = " ";
+      $errori["Eta"] = "";
       if(array_key_exists('Eta', $_POST)){
         $Eta = $_POST["Eta"];
       }
     }
 
-
-      if(!is_numeric($_POST["MassaGrassa"]) || $_POST["MassaGrassa"] < 2 || $_POST["MassaGrassa"]){
+    if(array_key_exists('MassaGrassa', $_POST)){
+      if(!is_numeric($_POST["MassaGrassa"]) || $_POST["MassaGrassa"] < 2 || $_POST["MassaGrassa"] > 60){
         $errori["MassaGrassa"] = "is-danger";
         $MassaGrassa = "";
       }else{
-        $errori["MassaGrassa"] = " ";
+        $errori["MassaGrassa"] = "";
         if(array_key_exists('MassaGrassa', $_POST)){
           $MassaGrassa = $_POST["MassaGrassa"];
         }
       }
+    }
+
 
     if (!array_key_exists('Allenamento', $_POST)) {
     $errori["Allenamento"] = "style='color: #f14668';";
   }else{
-    $errori["Allenamento"] = " ";
+    $errori["Allenamento"] = "";
   }
 
-    if (!array_key_exists('Cardio', $_POST) && array_key_exists('Allenamento', $_POST) && $_POST["Allenamento"] == "si"){
-        $errori["Cardio"] = "style='color: #f14668';";
+
+    if(array_key_exists("Allenamento", $_POST)){
+      if($_POST["Allenamento"] == "si"){
+        if(!array_key_exists("Cardio", $_POST)){
+          $errori["Cardio"] = "style='color: #f14668';";
+        }else{
+          $errori["Cardio"] = "";
+        }
+      }else{
+        $errori["Cardio"] = "";
+      }
     }else{
-      $errori["Cardio"] = " ";
+      $errori["Cardio"] = "";
     }
 
     if (array_key_exists('Cardio', $_POST) && array_key_exists('Allenamento', $_POST) && $_POST["Cardio"] == "si" && $_POST["Allenamento"] == "si"){
-      if(!is_numeric($_POST["GiorniCardio"]) || $_POST["GiorniCardio"] < 0 || $_POST["GiorniCardio"] > 7){
+      if(!is_numeric($_POST["GiorniCardio"]) || $_POST["GiorniCardio"] < 1 || $_POST["GiorniCardio"] > 7){
         $errori["GiorniCardio"] = "is-danger";
         $GiorniCardio = "";
       }else{
-        $errori["GiorniCardio"] = " ";
+        $errori["GiorniCardio"] = "";
         if(array_key_exists('GiorniCardio', $_POST)){
           $GiorniCardio = $_POST["GiorniCardio"];
         }
@@ -140,18 +153,26 @@
       }
     }
 
-    if (!array_key_exists('Pesi', $_POST) && array_key_exists('Allenamento', $_POST) && $_POST["Allenamento"] == "si"){
-        $errori["Pesi"] = "style='color: #f14668';";
+    if(array_key_exists("Allenamento", $_POST)){
+      if($_POST["Allenamento"] == "si"){
+        if(!array_key_exists("Pesi", $_POST)){
+          $errori["Pesi"] = "style='color: #f14668';";
+        }else{
+          $errori["Pesi"] = "";
+        }
+      }else{
+        $errori["Pesi"] = "";
+      }
     }else{
-      $errori["Pesi"] = " ";
+      $errori["Pesi"] = "";
     }
 
     if (array_key_exists('Pesi', $_POST) && array_key_exists('Allenamento', $_POST) && $_POST["Pesi"] == "si" && $_POST["Allenamento"] == "si"){
-      if(!is_numeric($_POST["GiorniPesi"]) || $_POST["GiorniPesi"] < 0 || $_POST["GiorniPesi"] > 7){
+      if(!is_numeric($_POST["GiorniPesi"]) || $_POST["GiorniPesi"] < 1 || $_POST["GiorniPesi"] > 7){
         $errori["GiorniPesi"] = "is-danger";
         $GiorniPesi = "";
       }else{
-        $errori["GiorniPesi"] = " ";
+        $errori["GiorniPesi"] = "";
         if(array_key_exists('GiorniPesi', $_POST)){
           $GiorniPesi = $_POST["GiorniPesi"];
         }
@@ -162,13 +183,13 @@
       $errori["Lavoro"] = "is-danger";
       $Lavoro = "";
     }else{
-      $errori["Lavoro"] = " ";
+      $errori["Lavoro"] = "";
       $Lavoro = $_POST["lavoro"];
     }
 
     $flag = 0;
     foreach($errori as $key => $value){
-      if($errori[$key] != " "){
+      if(!empty($errori[$key])){
         $flag = 1;
       }
     }
@@ -182,19 +203,20 @@
       header('Location: risultato.php');
     }
 
+
 	}else{
     $errori = Array(
-      "Sesso" => " ",
-      "Peso" => " ",
-      "Altezza" => " ",
-      "Eta" => " ",
-      "MassaGrassa" => " ",
-      "Allenamento" => " ",
-      "Cardio" => " ",
-      "GiorniCardio" => " ",
-      "Pesi" => " ",
-      "GiorniPesi" => " ",
-      "lavoro" => " "
+      "Sesso" => "",
+      "Peso" => "",
+      "Altezza" => "",
+      "Eta" => "",
+      "MassaGrassa" => "",
+      "Allenamento" => "",
+      "Cardio" => "",
+      "GiorniCardio" => "",
+      "Pesi" => "",
+      "GiorniPesi" => "",
+      "lavoro" => ""
     );
   }
 

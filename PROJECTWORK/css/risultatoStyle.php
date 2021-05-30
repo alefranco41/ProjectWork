@@ -11,9 +11,6 @@ if($_SESSION["ERRORE"] == 1){
 
 ?>
 
-html {
-  background-color: #56baed;
-}
 
 body {
   font-family: "Poppins", sans-serif;

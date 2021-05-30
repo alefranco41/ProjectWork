@@ -42,23 +42,24 @@ function bmr() {
 
 
 function controlloFormula(formula) {
+  console.log(inputArray);
   f = formula;
   valoriDefault();
   if(formula == "km"){
     nascondi([1,3,4,10]);
     visualizza([0,2,5,11]);
     rimuoviDisabled([2,5,6,7]);
-    aggiungiDisabled([0,1,3,4,8,9,10,11,12,13]);
+    aggiungiDisabled([0,1,3,4/*,8,9,10,11,12,13*/]);
   }else if(formula == "s"){
     nascondi([3,5,10]);
     visualizza([0,1,2,4,11]);
     rimuoviDisabled([0,1,2,4,6,7]);
-    aggiungiDisabled([3,5,8,9,10,11,12,13]);
+    aggiungiDisabled([3,5/*,8,9,10,11,12,13*/]);
   }else if(formula == "hb" || formula == "rhb" || formula == "msj"){
     nascondi([5,10]);
     visualizza([0,1,2,3,4,11]);
     rimuoviDisabled([0,1,2,3,4,6,7]);
-    aggiungiDisabled([5,8,9,10,11,12,13]);
+    aggiungiDisabled([5/*,8,9,10,11,12,13*/]);
   }
 }
 
