@@ -376,49 +376,26 @@ function generaHash($len=32)
 
 
 function inviaMail($to, $subject, $content){
-	/* CONFIGURATION */
-	$crendentials = array(
-	    'email'     => 'alessandro.franceschini.2002@gmail.com',    //Your GMail adress
-	    'password'  => 'diomede2017'               //Your GMail password
-	    );
-
-	/* SPECIFIC TO GMAIL SMTP */
-	$smtp = array(
-
-	'host' => 'smtp.gmail.com',
-	'port' => 587,
-	'username' => $crendentials['email'],
-	'password' => $crendentials['password'],
-	'secure' => 'tls' //SSL or TLS
-
-	);
-
-
-
-
 	$mailer = new PHPMailer();
 
-
 	$mailer->isSMTP();
-	$mailer->SMTPAuth   = true; //We need to authenticate
-	$mailer->Host       = $smtp['host'];
-	$mailer->Port       = $smtp['port'];
-	$mailer->Username   = $smtp['username'];
-	$mailer->Password   = $smtp['password'];
-	$mailer->SMTPSecure = $smtp['secure'];
+	$mailer->SMTPAuth   = true;
+	$mailer->Host       = 'smtp.gmail.com';
+	$mailer->Port       = 587;
+	$mailer->Username   = 'alessandro.franceschini.2002@gmail.com';
+	$mailer->Password   = 'diomede2017';
+	$mailer->SMTPSecure = 'tls';
 
-	//Now, send mail :
-	//From - To :
-	$mailer->From       = $crendentials['email'];
-	$mailer->FromName   = 'Alessandro'; //Optional
-	$mailer->addAddress($to);  // Add a recipient
+	$mailer->From       = 'alessandro.franceschini.2002@gmail.com';
+	$mailer->FromName   = 'Alessandro';
+	$mailer->addAddress($to);
 
-	//Subject - Body :
+
 	$mailer->Subject        = $subject;
 	$mailer->Body           = $content;
-	$mailer->isHTML(true); //Mail body contains HTML tags
+	$mailer->isHTML(true);
 
-	//Check if mail is sent :
+
 	if(!$mailer->send()) {
 			echo $mailer->ErrorInfo;
 	    echo "Email non inviata";
