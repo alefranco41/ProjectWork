@@ -151,7 +151,7 @@ error_reporting(E_ALL);
        return json_decode($result);
    }
 
-	 function queryAllenamento($attrezzatura){
+	 function queryAllenamento($arr){
 		 $gruppoMuscolare = array(
  			0 => "Chest",
 			1 => "back",
@@ -163,29 +163,66 @@ error_reporting(E_ALL);
 
  		);
 
-		echo $attrezzatura;
 
-		if($attrezzatura == "palestra"){
+		if($arr["attrezzatura"] == "palestra"){
 			$attrezzatura = "Jump%20Rope,Dumbbell,Lever,Bodyweight,Medicine%20Ball,Stretch,Barbell,Lever%20(plate%20loaded),Cable,Sled,Weighted,Lever%20(selectorized),Isometric,Kettlebell,Rope,Self-assisted,%20Machine-assisted,Partner-assisted,Smith,Cardio%20Machine,PNF%20Stretch,Machine%20Stretch,Suspended,Special%20Barbell,Band%20Resistive,Band-assisted";
 
-		}else if($attrezzatura == "pesi"){
+		}else if($arr["attrezzatura"] == "pesi"){
 			$attrezzatura = "Dumbbell,Bodyweight,Barbell";
-		}else if($attrezzatura	== "niente"){
+		}else if($arr["attrezzatura"]	== "niente"){
 			$attrezzatura = "Bodyweight";
 		}
+
+
+			/*if($arr["tipo"] == "Monofrequenza"){
+				if(count($arr["giorno"] == 1)){
+
+				}else if(count($arr["giorno"] == 2)){
+
+				}else if(count($arr["giorno"] == 3)){
+
+				}else if(count($arr["giorno"] == 4)){
+
+				}else if(count($arr["giorno"] == 5)){
+
+				}else if(count($arr["giorno"] == 6)){
+
+				}else if(count($arr["giorno"] == 7)){
+
+				}
+			}else if($arr["tipo"] == "Multifrequenza"){
+				if(count($arr["giorno"] == 1)){
+
+				}else if(count($arr["giorno"] == 2)){
+
+				}else if(count($arr["giorno"] == 3)){
+
+				}else if(count($arr["giorno"] == 4)){
+
+				}else if(count($arr["giorno"] == 5)){
+
+				}else if(count($arr["giorno"] == 6)){
+
+				}else if(count($arr["giorno"] == 7)){
+
+				}
+			}*/
+
 		 $nodes = array();
 		 for($i=0; $i<count($gruppoMuscolare); $i++){
+
 			 if($i == 2){
 				 $query = "http://204.235.60.194/exrxapi/v1/allinclusive/exercises?bodypart={$gruppoMuscolare[$i]}&apparatus=[$attrezzatura]";
 
 			 }else{
 				 $query = "http://204.235.60.194/exrxapi/v1/allinclusive/exercises?musclegroup={$gruppoMuscolare[$i]}&apparatus=[$attrezzatura]";
 			 }
-			 array_push($nodes, $query);
-		 }
 
-		 return $nodes;
+
+			 array_push($nodes, $query);
 	 }
+	 return $nodes;
+ }
 
 	 function caricaTabella($righe, $giorni, $colonne, $muscoli){
 		 $tabella = "<div class='table-wrapper'><table id='tabellaPasti' class='fl-table'>";

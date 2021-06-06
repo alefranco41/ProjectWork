@@ -31,19 +31,30 @@ session_start();
 
 
     if(array_key_exists("invia", $_POST)){
+    if(!empty($_POST['giorno'])) {
+        implode(' ', $_POST['giorno']);
+    }
+
+
+
       $authed = jwt_auth_for_token("alessandrofexrx", "Ckptn63w");
       $authed = (array) $authed;
       $token = $authed["token"];
-      $nodes = queryAllenamento($_POST["attrezzatura"]);
+      $nodes = queryAllenamento($_POST);
 
 
 
 
       $res = jwt_request($token, $nodes);
       $res = (array) $res;
-      $res = json_encode($res);
+      $res = json_encode($res, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_NUMERIC_CHECK);
       $jsonFile = "../json/chiamataAllenamento.json";
       file_put_contents($jsonFile, $res);
+
+
+      $post = json_encode($_POST);
+      $jsonPOST = "../json/chiamataPOST.json";
+      file_put_contents($jsonPOST, $post);
     }
 
 ?>
@@ -235,13 +246,13 @@ session_start();
                 <div class='field is-narrow'>
                   <div class='control'>
                     <label class='checkbox'>
-                      <input type='checkbox' name='Lunedì'>Lunedì<br>
-                      <input type='checkbox' name='Martedì'>Martedì<br>
-                      <input type='checkbox' name='Mercoledì'>Mercoledì<br>
-                      <input type='checkbox' name='Giovedì'>Giovedì<br>
-                      <input type='checkbox' name='Venerdì'>Venerdì<br>
-                      <input type='checkbox' name='Sabato'>Sabato<br>
-                      <input type='checkbox' name='Domenica'>Domenica<br>
+                      <input type='checkbox' name='giorno[]' value="2">Lunedì<br>
+                      <input type='checkbox' name='giorno[]' value="3">Martedì<br>
+                      <input type='checkbox' name='giorno[]' value="4">Mercoledì<br>
+                      <input type='checkbox' name='giorno[]' value="5">Giovedì<br>
+                      <input type='checkbox' name='giorno[]' value="6">Venerdì<br>
+                      <input type='checkbox' name='giorno[]' value="7">Sabato<br>
+                      <input type='checkbox' name='giorno[]' value="8">Domenica<br>
                     </label>
                   </div>
                 </div>

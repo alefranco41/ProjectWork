@@ -46,12 +46,11 @@ function parser(jsonFile, flag) {
 }
 
 function compilaTabella(t,c,f,u, flag){
-  var sheet = getStyleSheet("http://localhost/projectwork/PROJECTWORK/css/dieta.css");
+  var sheet = getStyleSheet("http://branceschini.hopto.org/css/dieta.css");
   var arrayCaselle = document.querySelectorAll("tbody td");
 
   if(arrayCaselle.length == t.length){
     for(var i=0; i<arrayCaselle.length; i++){
-      console.log(sheet);
       arrayCaselle[i].className = "hacaricato";
       arrayCaselle[i].innerHTML = "<span class = 'testo'>" +"<a href='" + u[i]+ "'>" + "Ricetta: " + t[i] + "<br>" + "Calorie: " + Math.round(c[i]) + "<br>" + "<img src='" + f[i] + "'></img></a></span>";
     }
