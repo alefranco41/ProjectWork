@@ -246,13 +246,13 @@ session_start();
                 <div class='field is-narrow'>
                   <div class='control'>
                     <label class='checkbox'>
-                      <input type='checkbox' name='giorno[]' value="2">Lunedì<br>
-                      <input type='checkbox' name='giorno[]' value="3">Martedì<br>
-                      <input type='checkbox' name='giorno[]' value="4">Mercoledì<br>
-                      <input type='checkbox' name='giorno[]' value="5">Giovedì<br>
-                      <input type='checkbox' name='giorno[]' value="6">Venerdì<br>
-                      <input type='checkbox' name='giorno[]' value="7">Sabato<br>
-                      <input type='checkbox' name='giorno[]' value="8">Domenica<br>
+                      <input type='checkbox' name='giorno[]' value="Lunedì">Lunedì<br>
+                      <input type='checkbox' name='giorno[]' value="Martedì">Martedì<br>
+                      <input type='checkbox' name='giorno[]' value="Mercoledì">Mercoledì<br>
+                      <input type='checkbox' name='giorno[]' value="Giovedì">Giovedì<br>
+                      <input type='checkbox' name='giorno[]' value="Venerdì">Venerdì<br>
+                      <input type='checkbox' name='giorno[]' value="Sabato">Sabato<br>
+                      <input type='checkbox' name='giorno[]' value="Domenica">Domenica<br>
                     </label>
                   </div>
                 </div>
@@ -267,11 +267,11 @@ session_start();
                 <div class='field is-narrow'>
                   <div class='control'>
                     <label class='radio'>
-                      <input type='radio' name='tipo'>
+                      <input type='radio' name='tipo' value='mono'>
                         Monofrequenza
                     </label><br>
                     <label class='radio'>
-                      <input type='radio' name='tipo'>
+                      <input type='radio' name='tipo' value='multi'>
                         Multifrequenza
                     </label>
                   </div>
@@ -279,48 +279,22 @@ session_start();
               </div>
 
 
-              <div class='field-label is-normal'>
-                <label class='label'>Giorni Cardio</label>
-              </div>
 
+
+              <div class='field-label is-normal'>
+                <label class='label'>Cardio</label>
+              </div>
               <div class='field-body'>
                 <div class='field is-narrow'>
                   <div class='control'>
-                    <div class='select is-fullwidth'>
-                      <select id='pesi' name='pesi'>
-                        <option value='0' selected>0</option>
-                        <option value='1' selected>1</option>
-                        <option value='2' selected>2</option>
-                        <option value='3' selected>3</option>
-                        <option value='4' selected>4</option>
-                        <option value='5' selected>5</option>
-                        <option value='6' selected>6</option>
-                        <option value='7' selected>7</option>
-                      </select>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div class='field-label is-normal'>
-                <label class='label'>Giorni Pesi</label>
-              </div>
-
-              <div class='field-body'>
-                <div class='field is-narrow'>
-                  <div class='control'>
-                    <div class='select is-fullwidth'>
-                      <select id='pesi' name='pesi'>
-                        <option value='0' selected>0</option>
-                        <option value='1' selected>1</option>
-                        <option value='2' selected>2</option>
-                        <option value='3' selected>3</option>
-                        <option value='4' selected>4</option>
-                        <option value='5' selected>5</option>
-                        <option value='6' selected>6</option>
-                        <option value='7' selected>7</option>
-                      </select>
-                    </div>
+                    <label class='radio'>
+                      <input type='radio' name='cardio' value='si'>
+                        si
+                    </label><br>
+                    <label class='radio'>
+                      <input type='radio' name='cardio' value='no'>
+                        no
+                    </label>
                   </div>
                 </div>
               </div>
