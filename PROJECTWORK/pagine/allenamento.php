@@ -24,7 +24,7 @@ session_start();
   ];
 
 
-
+  
     $righe = 8;
     $colonne = 8;
     $tabella = caricaTabella($righe, $giorni, $colonne, $muscoli);

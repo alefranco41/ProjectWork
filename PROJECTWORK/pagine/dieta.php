@@ -16,6 +16,7 @@ $pass = $_SESSION["password"];
 $sql = "SELECT * FROM utente WHERE username = '$id' AND password = '$pass'";
 $righe = eseguiquery($sql);
 $TDEE = $righe[0]["TDEE"];
+print_r($TDEE);
 if($TDEE != 0){
 
   $righe = 5;
@@ -58,6 +59,8 @@ if($TDEE != 0){
 
       }
     }
+    
+
     $tabella = caricaTabella($righe, $giorni, $colonne, "");
     $output = chiamataDieta($nodes);
     $output = json_encode($output);

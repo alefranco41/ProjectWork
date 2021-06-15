@@ -27,6 +27,19 @@ else{
     header('Location: risultato.php');
   }
 }
+
+$utente = $_SESSION['username'];
+$sql = "SELECT TDEE FROM utente WHERE username = '$u' AND password = '$p'";
+$righe = eseguiquery($sql);
+$TDEE = $righe[0]["TDEE"];
+$messaggio = "Benvenuto $utente, in base ai dati inseriti, il tuo fabbisogno calorico giornaliero risulta essere di $TDEE kcal";
+
+  $html = "<p class='has-text-centered is-size-4	has-text-weight-bold'>
+    $messaggio
+  </p><br>
+        <a href='tdee.php' class='button is-primary is-outlined is-large is-fullwidth is-rounded'>Ricalcola il tuo fabbisogno calorico giornaliero</a><br>
+";
+
 ?>
 
  <!DOCTYPE html>
@@ -201,6 +214,7 @@ else{
          </nav>
          <div class="hero-body">
              <div class="container">
+               <?php echo $html; ?>
                <a href='dieta.php' class='button is-primary is-outlined is-large is-fullwidth is-rounded'>Crea il tuo piano alimentare</a><br>
                <a href='allenamento.php' class='button is-primary is-outlined is-large is-fullwidth is-rounded'>Crea il tuo piano d'allenamento</a><br>
              </div>
